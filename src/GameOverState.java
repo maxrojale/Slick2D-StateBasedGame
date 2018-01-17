@@ -20,6 +20,7 @@ public class GameOverState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta)
+		
 			throws SlickException {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());

@@ -16,6 +16,7 @@ public class GameState extends BasicGameState{
 
 	public static Input in;
 	private static Image background;
+	private static Image playerImage;
 	private static int background_pos=0;
 	private static int background2_pos=Setup.WIDTH;
 	private static int background_scroll_speed=5;
@@ -35,6 +36,8 @@ public class GameState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		background=new Image("res/starfield2.png");
+		playerImage = new Image("res/player.png");
+		playerImage.rotate(90);
 		enemy1 = new Enemy(800,20,32,32,-5,0);
 		enemy2 = new Enemy(800,120,32,32,-5,0);
 		enemy3 = new Enemy(800,220,32,32,-5,0);
@@ -149,15 +152,19 @@ public class GameState extends BasicGameState{
 		
 		//GameData Updater
 		GameData.player = player;
-		
+		test
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) {
 		g.drawImage(background, background_pos, 0);
-		g.drawImage(background, background2_pos, 0);
-		g.setColor(Color.magenta);
-		g.fill(player.getPlayershape());
+		g.drawImage(background, background2_pos, 0);		
+		//g.setColor(Color.magenta);
+		//g.fill(player.getPlayershape());
+		g.drawImage(playerImage,player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);
+		
+		//playerImage.draw(player.getPlayershape().getMinX()-4,player.getPlayershape().getMinY()-6);
+		
 		g.setColor(Color.cyan);
 		for (int i=0; i < bullets.size(); i++) {
 			g.fill(bullets.get(i).getShape());

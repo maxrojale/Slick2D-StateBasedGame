@@ -1,3 +1,4 @@
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -28,7 +29,7 @@ public class Player {
 		}
 
 		public void init() {
-			playershape = new Rectangle(posx,posy,30,30);
+			playershape = new Polygon(new float[]{50,50,50,98,98,75});
 		}
 		
 		public int getPosy() {
