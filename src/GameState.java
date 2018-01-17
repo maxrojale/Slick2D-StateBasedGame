@@ -152,7 +152,7 @@ public class GameState extends BasicGameState{
 		
 		//GameData Updater
 		GameData.player = player;
-		test
+		
 	}
 
 	@Override
