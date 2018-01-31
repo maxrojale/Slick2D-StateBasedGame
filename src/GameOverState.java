@@ -23,14 +23,16 @@ public class GameOverState extends BasicGameState {
 		
 			throws SlickException {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
-			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
+			GameData.GameOver=false;
+			in.clearKeyPressedRecord();
+			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g)
 			throws SlickException {
-		g.drawString("Game Over", 50, 50);
+		g.drawString("Game Over.... Press ESC to Restart", Setup.WIDTH/2-150, Setup.HEIGHT/2);
 	}
 
 	@Override
