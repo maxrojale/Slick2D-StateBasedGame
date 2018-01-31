@@ -145,6 +145,7 @@ public class GameState extends BasicGameState{
 		
 		//GameData Updater
 		GameData.player = player;
+<<<<<<< HEAD
 		GameData.enemies = enemies;
 		GameData.bullets = bullets;
 		//
@@ -155,6 +156,9 @@ public class GameState extends BasicGameState{
 			gsm.enterState(9);
 			in.clearKeyPressedRecord();
 		}
+=======
+		
+>>>>>>> fb26ae8456e00fea18cacb72a76627effc6bc45e
 	}
 
 	@Override
