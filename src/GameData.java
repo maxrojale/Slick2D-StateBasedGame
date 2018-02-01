@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class GameData {
 	public static Player player;
@@ -11,6 +12,9 @@ public class GameData {
 	public static boolean GameOver = false;
 	public static Image playerImage;
 	public static Image enemyImage;
+	public static Sound playerLaser;
+	public static Sound enemy1Laser;
+	public static Sound explosion;
 	public static Enemy enemy1;
 	public static Enemy enemy2;
 	public static Enemy enemy3;
@@ -20,6 +24,9 @@ public class GameData {
 	public static void loadGameFiles() throws SlickException {
 		playerImage = new Image("res/player.png");
 		enemyImage = new Image("res/enemy1.png");
+		playerLaser = new Sound("res/laser.wav");
+		enemy1Laser = new Sound ("res/enemy1laser.wav");
+		explosion = new Sound("res/explosion.wav");
 		playerImage.rotate(90);
 		enemyImage.rotate(270);
 		player = new Player(playerImage);

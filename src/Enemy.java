@@ -40,6 +40,7 @@ public class Enemy {
 		if (bulletdelay<=0) {
 			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletradius,bulletvector);
 			GameData.enemybullets.add(bullet);
+			GameData.enemy1Laser.play();
 			bulletdelay=20;
 		}
 		else {

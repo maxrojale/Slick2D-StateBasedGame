@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -27,6 +28,7 @@ public class GameState extends BasicGameState{
 	public static int counter = 0;
 	public static String score;
 	private Player player;
+	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
@@ -38,6 +40,7 @@ public class GameState extends BasicGameState{
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
+		//GameData.music.loop();
 	}
 	
 	
@@ -76,6 +79,7 @@ public class GameState extends BasicGameState{
 		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0) {
 			Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20);
 			bullets.add(bullet);
+			GameData.playerLaser.play();
 			bulletdelay=5;
 		}
 
@@ -104,6 +108,7 @@ public class GameState extends BasicGameState{
 			for (int j=0; j < enemies.size(); j++) {
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
 					bullets.get(i).setDelete(true);
+					GameData.explosion.play();
 					enemies.remove(j);				}
 			}
 		}
@@ -164,6 +169,7 @@ public class GameState extends BasicGameState{
 		
 		if (player.isCollided()) {
 			GameData.GameOver=true;
+			GameData.explosion.play();
 			enemies.clear();
 			ebullets.clear();
 			bullets.clear();
