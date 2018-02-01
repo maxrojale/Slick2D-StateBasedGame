@@ -21,6 +21,7 @@ public class GameState extends BasicGameState{
 	private int bulletdelay=0;
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
 	public static String score = "test";
 	public Enemy enemy1;
@@ -123,15 +124,16 @@ public class GameState extends BasicGameState{
 		
 		//Enemies Shoot
 		for (int i=0; i < enemies.size(); i++) {
-			enemies.get(i).shoot();	
+			enemies.get(i).shoot();
+			ebullets = GameData.enemybullets;
 		}
 		//EnemyBulletsMovement
-		for (int i=0; i < GameData.enemybullets.size(); i++) {
-			GameData.enemybullets.get(i).getShape().setCenterX(GameData.enemybullets.get(i).getShape().getCenterX()+GameData.enemybullets.get(i).getVector_x());
+		for (int i=0; i < ebullets.size(); i++) {
+			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
 		}
 		//EnemyBullets Collison
-		for (int i=0; i < GameData.enemybullets.size();i++) {
-			if (GameData.enemybullets.get(i).getShape().intersects(player.getPlayershape())) {
+		for (int i=0; i < ebullets.size();i++) {
+			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
 				player.setCollided(true);
 			}
 		}
@@ -142,12 +144,23 @@ public class GameState extends BasicGameState{
 			}
 		}
 		
-		
+		//BulletCleanUp Check, setDeleter
+		for (int i=0; i < ebullets.size(); i++) {
+			if (ebullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
+				ebullets.get(i).setDelete(true);
+			}
+		}
 		
 		//BulletDeleter
 		for (int i=0; i < bullets.size(); i++) {
 			if (bullets.get(i).getDelete()==true) {
 				bullets.remove(i);
+			}
+		}
+		
+		for (int i=0; i < ebullets.size(); i++) {
+			if (ebullets.get(i).getDelete()==true) {
+				ebullets.remove(i);
 			}
 		}
 		
@@ -181,9 +194,9 @@ public class GameState extends BasicGameState{
 				g.fill(bullets.get(i).getShape());
 			}
 			
-			for (int i=0; i < GameData.enemybullets.size(); i++) {
+			for (int i=0; i < ebullets.size(); i++) {
 				g.setColor(Color.orange);
-				g.fill(GameData.enemybullets.get(i).getShape());
+				g.fill(ebullets.get(i).getShape());
 			}
 			
 			for (int i=0; i < enemies.size(); i++) {

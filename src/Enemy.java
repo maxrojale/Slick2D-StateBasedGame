@@ -40,7 +40,7 @@ public class Enemy {
 		if (bulletdelay<=0) {
 			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletradius,bulletvector);
 			GameData.enemybullets.add(bullet);
-			bulletdelay=10;
+			bulletdelay=20;
 		}
 		else {
 			bulletdelay--;
