@@ -42,8 +42,8 @@ public class Bullet {
 		return position_x;
 	}
 
-	public void setPosition_x(int position_x) {
-		this.position_x = position_x;
+	public void setPosition_x(float vector) {
+		this.position_x = vector;
 	}
 
 	public float getPosition_y() {

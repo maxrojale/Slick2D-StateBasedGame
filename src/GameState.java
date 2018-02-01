@@ -123,16 +123,26 @@ public class GameState extends BasicGameState{
 		
 		//Enemies Shoot
 		for (int i=0; i < enemies.size(); i++) {
-			enemies.get(i).shoot();
-			enemies.get(i).updateBullets();
+			enemies.get(i).shoot();	
 		}
-		
+		//EnemyBulletsMovement
+		for (int i=0; i < GameData.enemybullets.size(); i++) {
+			GameData.enemybullets.get(i).getShape().setCenterX(GameData.enemybullets.get(i).getShape().getCenterX()+GameData.enemybullets.get(i).getVector_x());
+		}
+		//EnemyBullets Collison
+		for (int i=0; i < GameData.enemybullets.size();i++) {
+			if (GameData.enemybullets.get(i).getShape().intersects(player.getPlayershape())) {
+				player.setCollided(true);
+			}
+		}
 		//BulletCleanUp Check, setDeleter
 		for (int i=0; i < bullets.size(); i++) {
 			if (bullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
 				bullets.get(i).setDelete(true);
 			}
 		}
+		
+		
 		
 		//BulletDeleter
 		for (int i=0; i < bullets.size(); i++) {
@@ -145,7 +155,6 @@ public class GameState extends BasicGameState{
 		
 		//GameData Updater
 		GameData.player = player;
-<<<<<<< HEAD
 		GameData.enemies = enemies;
 		GameData.bullets = bullets;
 		//
@@ -156,9 +165,7 @@ public class GameState extends BasicGameState{
 			gsm.enterState(9);
 			in.clearKeyPressedRecord();
 		}
-=======
-		
->>>>>>> fb26ae8456e00fea18cacb72a76627effc6bc45e
+
 	}
 
 	@Override
@@ -173,17 +180,18 @@ public class GameState extends BasicGameState{
 			for (int i=0; i < bullets.size(); i++) {
 				g.fill(bullets.get(i).getShape());
 			}
-		
+			
+			for (int i=0; i < GameData.enemybullets.size(); i++) {
+				g.setColor(Color.orange);
+				g.fill(GameData.enemybullets.get(i).getShape());
+			}
+			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
 					//g.setColor(Color.red);
 					//g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
 					
-				}
-				for (int j=0; j < enemies.get(i).getBullets().size();j++) {
-					g.setColor(Color.orange);
-					g.fill(enemies.get(i).getBullets().get(j).getShape());
 				}
 			}
 			g.setColor(Color.white);
