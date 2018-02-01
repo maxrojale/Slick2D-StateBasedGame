@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -9,9 +10,9 @@ public class Enemy {
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private boolean toBeDeleted;
 	Shape enemyshape;
-	
-	
-	public Enemy (int posx, int posy,int sizex,int sizey, int vectorx, int vectory) {
+	Image enemyImage;
+
+	public Enemy (int posx, int posy,int sizex,int sizey, int vectorx, int vectory, Image enemyImage) {
 		this.posx=posx;
 		this.posy=posy;
 		this.sizex=sizex;
@@ -23,6 +24,7 @@ public class Enemy {
 		bulletvector=-20;
 		toBeDeleted=false;
 		enemyshape=new Rectangle(posx,posy,sizex,sizey);
+		this.enemyImage = enemyImage;
 		
 	}
 	
@@ -37,8 +39,8 @@ public class Enemy {
 	public void shoot() {
 		if (bulletdelay<=0) {
 			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletradius,bulletvector);
-			bullets.add(bullet);
-			bulletdelay=10;
+			GameData.enemybullets.add(bullet);
+			bulletdelay=20;
 		}
 		else {
 			bulletdelay--;
@@ -137,7 +139,8 @@ public class Enemy {
 	public void setPosy(int posy) {
 		this.posy = posy;
 	}
-	
-
+	public Image getEnemyImage() {
+		return enemyImage;
+	}
 
 }

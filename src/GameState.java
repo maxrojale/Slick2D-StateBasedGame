@@ -8,21 +8,20 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
+
 
 
 public class GameState extends BasicGameState{
 
 	public static Input in;
 	private static Image background;
-	private static Image playerImage;
 	private static int background_pos=0;
 	private static int background2_pos=Setup.WIDTH;
 	private static int background_scroll_speed=5;
 	private int bulletdelay=0;
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
 	public static String score = "test";
 	public Enemy enemy1;
@@ -36,6 +35,7 @@ public class GameState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		background=new Image("res/starfield2.png");
+<<<<<<< HEAD
 		playerImage = new Image("res/player.png");
 		playerImage.rotate(90);
 		player = GameData.player;
@@ -55,10 +55,17 @@ public class GameState extends BasicGameState{
 		enemies.add(enemy3);
 		enemies.add(enemy4);
 		enemies.add(enemy5);
+=======
+		GameData.loadGameFiles();
+		GameData.initializeGameData();
+		player = GameData.player;
+		bullets = GameData.bullets;
+		enemies = GameData.enemies;
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
-
+	
 	@Override
-	public void update(GameContainer gc, StateBasedGame gsm, int delta) {
+	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
 		
 		//Background Movement
 		if (background_pos >= 0-Setup.WIDTH) {
@@ -94,12 +101,19 @@ public class GameState extends BasicGameState{
 			bullets.add(bullet);
 			bulletdelay=5;
 		}
+<<<<<<< HEAD
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			enemies.clear();
 			initgame();
 			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
+=======
+	/*	if (in.isKeyPressed(Input.KEY_ESCAPE)) {
+			GameData.GameOver=true;
+			gsm.enterState(9);
+			in.clearKeyPressedRecord();
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 		}
-		
+	*/
 		//Enemy Movement
 		for (int i=0; i < enemies.size();i++) {
 			enemies.get(i).getEnemyshape().setCenterX(enemies.get(i).getEnemyshape().getCenterX()+enemies.get(i).getVectorx());
@@ -119,6 +133,7 @@ public class GameState extends BasicGameState{
 				player.setCollided(true);
 			}
 		}
+		
 		//Collision Detection Player Bullets vs Enemies
 		for (int i=0; i < bullets.size(); i++) {
 			for (int j=0; j < enemies.size(); j++) {
@@ -127,6 +142,7 @@ public class GameState extends BasicGameState{
 					enemies.remove(j);				}
 			}
 		}
+		
 		//Player Bullet Movement
 		for (int i=0; i < bullets.size(); i++) {
 			bullets.get(i).getShape().setCenterX(bullets.get(i).getShape().getCenterX()+20);		
@@ -138,13 +154,29 @@ public class GameState extends BasicGameState{
 		//Enemies Shoot
 		for (int i=0; i < enemies.size(); i++) {
 			enemies.get(i).shoot();
-			enemies.get(i).updateBullets();
+			ebullets = GameData.enemybullets;
 		}
-		
+		//EnemyBulletsMovement
+		for (int i=0; i < ebullets.size(); i++) {
+			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
+		}
+		//EnemyBullets Collison
+		for (int i=0; i < ebullets.size();i++) {
+			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
+				player.setCollided(true);
+			}
+		}
 		//BulletCleanUp Check, setDeleter
 		for (int i=0; i < bullets.size(); i++) {
 			if (bullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
 				bullets.get(i).setDelete(true);
+			}
+		}
+		
+		//BulletCleanUp Check, setDeleter
+		for (int i=0; i < ebullets.size(); i++) {
+			if (ebullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
+				ebullets.get(i).setDelete(true);
 			}
 		}
 		
@@ -155,21 +187,41 @@ public class GameState extends BasicGameState{
 			}
 		}
 		
+		for (int i=0; i < ebullets.size(); i++) {
+			if (ebullets.get(i).getDelete()==true) {
+				ebullets.remove(i);
+			}
+		}
+		
 		//Enemy Deleter
 		
 		//GameData Updater
 		GameData.player = player;
+		GameData.enemies = enemies;
+		GameData.bullets = bullets;
+		//
 		
+<<<<<<< HEAD
 		if (GameData.player.isCollided()) {
 			//DELETE ENEMIES
 			enemies.clear();
 			
 			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
 		}
+=======
+		if (player.isCollided()) {
+			GameData.GameOver=true;
+			GameData.initializeGameData();
+			gsm.enterState(9);
+			in.clearKeyPressedRecord();
+		}
+
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) {
+<<<<<<< HEAD
 		if (!GameData.player.isCollided()) {
 			
 		g.drawImage(background, background_pos, 0);
@@ -189,18 +241,44 @@ public class GameState extends BasicGameState{
 			if (!enemies.get(i).isToBeDeleted()) {
 				g.setColor(Color.red);
 				g.fill(enemies.get(i).getEnemyshape());
+=======
+		if(!GameData.GameOver) {
+			g.drawImage(background, background_pos, 0);
+			g.drawImage(background, background2_pos, 0);		
+			//g.setColor(Color.magenta);
+			//g.fill(player.getPlayershape());
+			g.drawImage(player.getPlayerImage(),player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);		
+			g.setColor(Color.cyan);
+			for (int i=0; i < bullets.size(); i++) {
+				g.fill(bullets.get(i).getShape());
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 			}
-			for (int j=0; j < enemies.get(i).getBullets().size();j++) {
+			
+			for (int i=0; i < ebullets.size(); i++) {
 				g.setColor(Color.orange);
-				g.fill(enemies.get(i).getBullets().get(j).getShape());
+				g.fill(ebullets.get(i).getShape());
 			}
+			
+			for (int i=0; i < enemies.size(); i++) {
+				if (!enemies.get(i).isToBeDeleted()) {
+					//g.setColor(Color.red);
+					//g.fill(enemies.get(i).getEnemyshape());
+					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
+					
+				}
+			}
+			g.setColor(Color.white);
+			g.drawString(score, 10, 20);
 		}
+<<<<<<< HEAD
 		g.setColor(Color.white);
 		g.drawString(score, 10, 20);
 		}
 		else {
 			initgame();
 		}
+=======
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
 	
 	@Override

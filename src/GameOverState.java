@@ -22,7 +22,13 @@ public class GameOverState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame gsm, int delta)
 		
 			throws SlickException {
+<<<<<<< HEAD
 		if (in.isKeyPressed(Input.KEY_SPACE)) {
+=======
+		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
+			GameData.GameOver=false;
+			in.clearKeyPressedRecord();
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}
 	}
@@ -30,7 +36,11 @@ public class GameOverState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g)
 			throws SlickException {
+<<<<<<< HEAD
 		g.drawString("Game Over. Press Space", 50, 50);
+=======
+		g.drawString("Game Over.... Press ESC to Restart", Setup.WIDTH/2-150, Setup.HEIGHT/2);
+>>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
 
 	@Override
