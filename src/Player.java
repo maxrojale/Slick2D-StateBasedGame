@@ -7,17 +7,17 @@ public class Player {
 
 		boolean collided;
 		Shape playershape;
-<<<<<<< HEAD
-		public Player (int posx, int posy) {
-			this.posx = posx;
-			this.posy = posy;
-=======
-		float[] position;
 		Image playerImage;
+		float[] position;
+		
+		public Player (int posx, int posy, Image playerImage) {
+			this.playerImage = playerImage;
+			setStartingPosition();
+		}
+		
 		
 		public Player (Image playerImage) {
 			setStartingPosition();	
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 			collided=false;
 			this.playerImage = playerImage;
 		}

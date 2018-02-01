@@ -8,6 +8,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 
@@ -23,46 +25,21 @@ public class GameState extends BasicGameState{
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
-	public static String score = "test";
-	public Enemy enemy1;
-	public Enemy enemy2;
-	public Enemy enemy3;
-	public Enemy enemy4;
-	public Enemy enemy5;
+	public static String score;
 	private Player player;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		background=new Image("res/starfield2.png");
-<<<<<<< HEAD
-		playerImage = new Image("res/player.png");
-		playerImage.rotate(90);
 		player = GameData.player;
-		initgame();
-	}
-	
-	public void initgame() {
-		enemy1 = new Enemy(800,20,32,32,-5,0);
-		enemy2 = new Enemy(800,120,32,32,-5,0);
-		enemy3 = new Enemy(800,220,32,32,-5,0);
-		enemy4 = new Enemy(800,320,32,32,-5,0);
-		enemy5 = new Enemy(800,420,32,32,-5,0);
-		player.init();
-		player.setCollided(false);
-		enemies.add(enemy1);
-		enemies.add(enemy2);
-		enemies.add(enemy3);
-		enemies.add(enemy4);
-		enemies.add(enemy5);
-=======
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
+	
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
@@ -101,19 +78,7 @@ public class GameState extends BasicGameState{
 			bullets.add(bullet);
 			bulletdelay=5;
 		}
-<<<<<<< HEAD
-		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
-			enemies.clear();
-			initgame();
-			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
-=======
-	/*	if (in.isKeyPressed(Input.KEY_ESCAPE)) {
-			GameData.GameOver=true;
-			gsm.enterState(9);
-			in.clearKeyPressedRecord();
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
-		}
-	*/
+
 		//Enemy Movement
 		for (int i=0; i < enemies.size();i++) {
 			enemies.get(i).getEnemyshape().setCenterX(enemies.get(i).getEnemyshape().getCenterX()+enemies.get(i).getVectorx());
@@ -156,16 +121,14 @@ public class GameState extends BasicGameState{
 			enemies.get(i).shoot();
 			ebullets = GameData.enemybullets;
 		}
-		//EnemyBulletsMovement
+		//EnemyBulletsMovement & Collision vs Player
 		for (int i=0; i < ebullets.size(); i++) {
 			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
-		}
-		//EnemyBullets Collison
-		for (int i=0; i < ebullets.size();i++) {
 			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
 				player.setCollided(true);
 			}
 		}
+		
 		//BulletCleanUp Check, setDeleter
 		for (int i=0; i < bullets.size(); i++) {
 			if (bullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
@@ -173,7 +136,7 @@ public class GameState extends BasicGameState{
 			}
 		}
 		
-		//BulletCleanUp Check, setDeleter
+		//EnemyBulletCleanUp Check, setDeleter
 		for (int i=0; i < ebullets.size(); i++) {
 			if (ebullets.get(i).getShape().getCenterX() > Setup.WIDTH) {
 				ebullets.get(i).setDelete(true);
@@ -193,65 +156,33 @@ public class GameState extends BasicGameState{
 			}
 		}
 		
-		//Enemy Deleter
 		
 		//GameData Updater
 		GameData.player = player;
 		GameData.enemies = enemies;
 		GameData.bullets = bullets;
-		//
 		
-<<<<<<< HEAD
-		if (GameData.player.isCollided()) {
-			//DELETE ENEMIES
-			enemies.clear();
-			
-			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
-		}
-=======
 		if (player.isCollided()) {
 			GameData.GameOver=true;
+			enemies.clear();
+			ebullets.clear();
+			bullets.clear();
 			GameData.initializeGameData();
-			gsm.enterState(9);
+			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 			in.clearKeyPressedRecord();
 		}
-
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) {
-<<<<<<< HEAD
-		if (!GameData.player.isCollided()) {
-			
-		g.drawImage(background, background_pos, 0);
-		g.drawImage(background, background2_pos, 0);		
-		//g.setColor(Color.magenta);
-		//g.fill(player.getPlayershape());
-		g.drawImage(playerImage,player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);
-		
-		//playerImage.draw(player.getPlayershape().getMinX()-4,player.getPlayershape().getMinY()-6);
-		
-		g.setColor(Color.cyan);
-		for (int i=0; i < bullets.size(); i++) {
-			g.fill(bullets.get(i).getShape());
-		}
-		
-		for (int i=0; i < enemies.size(); i++) {
-			if (!enemies.get(i).isToBeDeleted()) {
-				g.setColor(Color.red);
-				g.fill(enemies.get(i).getEnemyshape());
-=======
-		if(!GameData.GameOver) {
+		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);		
-			//g.setColor(Color.magenta);
-			//g.fill(player.getPlayershape());
+	
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);		
 			g.setColor(Color.cyan);
 			for (int i=0; i < bullets.size(); i++) {
 				g.fill(bullets.get(i).getShape());
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
@@ -264,22 +195,12 @@ public class GameState extends BasicGameState{
 					//g.setColor(Color.red);
 					//g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
-					
 				}
 			}
-			g.setColor(Color.white);
-			g.drawString(score, 10, 20);
-		}
-<<<<<<< HEAD
-		g.setColor(Color.white);
-		g.drawString(score, 10, 20);
-		}
-		else {
-			initgame();
-		}
-=======
->>>>>>> b707260b4b4698ee0e752cd20c457dea8379d89c
+		}		
 	}
+		
+	
 	
 	@Override
 	public int getID() {
