@@ -8,7 +8,6 @@ public class Player {
 		private int posy;
 		boolean collided;
 		Shape playershape;
-		
 		public Player (int posx, int posy) {
 			this.posx = posx;
 			this.posy = posy;

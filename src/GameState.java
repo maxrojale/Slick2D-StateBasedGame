@@ -38,12 +38,18 @@ public class GameState extends BasicGameState{
 		background=new Image("res/starfield2.png");
 		playerImage = new Image("res/player.png");
 		playerImage.rotate(90);
+		player = GameData.player;
+		initgame();
+	}
+	
+	public void initgame() {
 		enemy1 = new Enemy(800,20,32,32,-5,0);
 		enemy2 = new Enemy(800,120,32,32,-5,0);
 		enemy3 = new Enemy(800,220,32,32,-5,0);
 		enemy4 = new Enemy(800,320,32,32,-5,0);
 		enemy5 = new Enemy(800,420,32,32,-5,0);
-		player = GameData.player;
+		player.init();
+		player.setCollided(false);
 		enemies.add(enemy1);
 		enemies.add(enemy2);
 		enemies.add(enemy3);
@@ -89,6 +95,8 @@ public class GameState extends BasicGameState{
 			bulletdelay=5;
 		}
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
+			enemies.clear();
+			initgame();
 			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
 		}
 		
@@ -109,7 +117,6 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
 				player.setCollided(true);
-				gsm.enterState(9);
 			}
 		}
 		//Collision Detection Player Bullets vs Enemies
@@ -153,10 +160,18 @@ public class GameState extends BasicGameState{
 		//GameData Updater
 		GameData.player = player;
 		
+		if (GameData.player.isCollided()) {
+			//DELETE ENEMIES
+			enemies.clear();
+			
+			gsm.enterState(9, new FadeOutTransition(), new FadeInTransition());
+		}
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) {
+		if (!GameData.player.isCollided()) {
+			
 		g.drawImage(background, background_pos, 0);
 		g.drawImage(background, background2_pos, 0);		
 		//g.setColor(Color.magenta);
@@ -182,6 +197,10 @@ public class GameState extends BasicGameState{
 		}
 		g.setColor(Color.white);
 		g.drawString(score, 10, 20);
+		}
+		else {
+			initgame();
+		}
 	}
 	
 	@Override
