@@ -12,6 +12,7 @@ public class GameData {
 	public static boolean GameOver = false;
 	public static Image playerImage;
 	public static Image enemyImage;
+	public static Image enemyBullet;
 	public static Sound playerLaser;
 	public static Sound enemy1Laser;
 	public static Sound explosion;
@@ -20,10 +21,13 @@ public class GameData {
 	public static Enemy enemy3;
 	public static Enemy enemy4;
 	public static Enemy enemy5;
+	public static int score;
+	public static String scoreString;
 	
 	public static void loadGameFiles() throws SlickException {
 		playerImage = new Image("res/player.png");
 		enemyImage = new Image("res/enemy1.png");
+		enemyBullet = new Image("res/enemybullet.png");
 		playerLaser = new Sound("res/laser.wav");
 		enemy1Laser = new Sound ("res/enemy1laser.wav");
 		explosion = new Sound("res/explosion.wav");
@@ -37,6 +41,8 @@ public class GameData {
 		bullets.clear();
 		player.setStartingPosition();
 		player.setCollided(false);
+		score=0;
+		scoreString= "Score: " + score;
 		enemy1 = new Enemy(800,20,48,24,-5,0,enemyImage);
 		enemy2 = new Enemy(800,120,48,24,-5,0,enemyImage);
 		enemy3 = new Enemy(800,220,48,24,-5,0,enemyImage);

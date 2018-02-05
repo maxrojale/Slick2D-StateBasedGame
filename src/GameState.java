@@ -26,7 +26,6 @@ public class GameState extends BasicGameState{
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
-	public static String score;
 	private Player player;
 	
 
@@ -109,6 +108,8 @@ public class GameState extends BasicGameState{
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
 					bullets.get(i).setDelete(true);
 					GameData.explosion.play();
+					GameData.score++;
+					GameData.scoreString = "Score: " + GameData.score;
 					enemies.remove(j);				}
 			}
 		}
@@ -180,7 +181,7 @@ public class GameState extends BasicGameState{
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) {
+	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);		
@@ -192,8 +193,9 @@ public class GameState extends BasicGameState{
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
-				g.setColor(Color.orange);
-				g.fill(ebullets.get(i).getShape());
+				//g.setColor(Color.orange);
+				//g.fill(ebullets.get(i).getShape());
+				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-5, ebullets.get(i).getShape().getMinY()-10);
 			}
 			
 			for (int i=0; i < enemies.size(); i++) {
@@ -203,6 +205,11 @@ public class GameState extends BasicGameState{
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
 				}
 			}
+			g.setColor(Color.orange);
+			g.drawString(GameData.scoreString, 10, 10);
+			
+			
+			//System.out.println(GameData.enemyImage.get
 		}		
 	}
 		
