@@ -27,6 +27,7 @@ public class GameState extends BasicGameState{
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
 	private Player player;
+	private CollisionHandler collisionHandler;
 	
 
 	@Override
@@ -34,6 +35,7 @@ public class GameState extends BasicGameState{
 		in = gc.getInput();
 		background=new Image("res/starfield2.png");
 		player = GameData.player;
+		collisionHandler = new CollisionHandler();
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
 		player = GameData.player;
@@ -98,7 +100,9 @@ public class GameState extends BasicGameState{
 		//Collision Detection Player vs Enemies
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
-				player.setCollided(true);
+				if (collisionHandler.collisionPlayerEnemy(player, enemies.get(i))) {
+					player.setCollided(true);
+				}
 			}
 		}
 		
@@ -124,8 +128,8 @@ public class GameState extends BasicGameState{
 		
 		//Enemies Shoot
 		for (int i=0; i < enemies.size(); i++) {
-			enemies.get(i).shoot();
-			ebullets = GameData.enemybullets;
+			//enemies.get(i).shoot();
+			//ebullets = GameData.enemybullets;
 		}
 		//EnemyBulletsMovement & Collision vs Player
 		for (int i=0; i < ebullets.size(); i++) {
@@ -185,8 +189,9 @@ public class GameState extends BasicGameState{
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);		
-	
-			g.drawImage(player.getPlayerImage(),player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);		
+			//g.setColor(Color.magenta);
+			//g.fill(player.getPlayershape());
+			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX(),player.getPlayershape().getMinY());		
 			g.setColor(Color.cyan);
 			for (int i=0; i < bullets.size(); i++) {
 				g.fill(bullets.get(i).getShape());
@@ -200,9 +205,9 @@ public class GameState extends BasicGameState{
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
-					//g.setColor(Color.red);
+					//g.setColor(Color.green);
 					//g.fill(enemies.get(i).getEnemyshape());
-					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
+					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX(),enemies.get(i).getEnemyshape().getMinY());
 				}
 			}
 			g.setColor(Color.orange);

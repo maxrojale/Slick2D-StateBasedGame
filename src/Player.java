@@ -1,6 +1,7 @@
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Player {
@@ -28,8 +29,9 @@ public class Player {
 		}
 		
 		public void setStartingPosition() {
-			position = new float[] {50,50,50,98,98,75};
-			playershape = new Polygon(position);
+		//	position = new float[] {50,50,50,98,98,75};
+		//	playershape = new Polygon(position);
+			playershape = new Rectangle(50,50,64,64);
 		}
 		
 		public boolean isCollided() {
