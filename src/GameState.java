@@ -51,7 +51,7 @@ public class GameState extends BasicGameState{
 		boolean spawnenemy=true;
 		//Spawn Enemies
 		if (enemies.size() < 7) {
-			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT)-30,48,24,-5,0,GameData.enemyImage);
+			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT),48,24,-5,0,GameData.enemyImage);
 			
 			for(int i=0; i < enemies.size();i++) {
 				if (enemies.get(i).getEnemyshape().intersects(enemy.getEnemyshape())) {
@@ -224,8 +224,8 @@ public class GameState extends BasicGameState{
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
-					g.setColor(Color.green);
-					g.fill(enemies.get(i).getEnemyshape());
+					//g.setColor(Color.green);
+					//g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
 				}
 			}
