@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
@@ -30,6 +31,7 @@ public class GameState extends BasicGameState{
 	private Player player;
 	private Enemy enemy;
 	private Random rnd;
+	Music music;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
@@ -42,12 +44,16 @@ public class GameState extends BasicGameState{
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
 		rnd = new Random();
-		//GameData.music.loop();
+		music = GameData.music;
 	}
 	
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
+		if(!music.playing()) {
+			music.loop();
+		}
+		
 		boolean spawnenemy=true;
 		//Spawn Enemies
 		if (enemies.size() < 7) {
@@ -198,8 +204,9 @@ public class GameState extends BasicGameState{
 			ebullets.clear();
 			bullets.clear();
 			GameData.initializeGameData();
-			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 			in.clearKeyPressedRecord();
+			music.stop();
+			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 
@@ -217,8 +224,8 @@ public class GameState extends BasicGameState{
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
-				g.setColor(Color.orange);
-				g.fill(ebullets.get(i).getShape());
+				//g.setColor(Color.orange);
+				//g.fill(ebullets.get(i).getShape());
 				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
 			}
 			
