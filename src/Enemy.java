@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Shape;
 
 public class Enemy {
 	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletradius;
-	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private boolean toBeDeleted;
 	Shape enemyshape;
 	Image enemyImage;
@@ -46,40 +45,8 @@ public class Enemy {
 		else {
 			bulletdelay--;
 		}
-		collisioncheck();
 	}
 	
-	private void collisioncheck() {
-		for (int i=0; i < bullets.size();i++) {
-			if(bullets.get(i).getShape().intersects(GameData.player.getPlayershape())) {
-				bullets.get(i).getShape().setCenterX(GameData.player.getPlayershape().getCenterX()-100);
-				bullets.get(i).setDelete(true);
-			}
-		}
-	}
-	
-	public void updateBullets() {
-		
-		//Bullet Movement and Clean Up Checker
-		for (int i=0; i < bullets.size(); i++) {
-			bullets.get(i).getShape().setCenterX(bullets.get(i).getShape().getCenterX()+bulletvector);
-			if (bullets.get(i).getShape().getCenterX() <= 1 || bullets.get(i).getShape().getCenterX() >= 950) {
-				bullets.get(i).setDelete(true);
-			}
-		}
-		
-		//Bullet Cleanup
-		for (int i=0; i < bullets.size(); i++) {
-			if (bullets.get(i).getDelete()==true) {
-				bullets.remove(i);
-			}
-		}
-	}
-	
-	public ArrayList<Bullet> getBullets() {
-		return bullets;
-	}
-
 	public int getSizex() {
 		return sizex;
 	}

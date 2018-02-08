@@ -5,11 +5,13 @@ import org.newdawn.slick.geom.Shape;
 public class CollisionHandler {
 	
 	public boolean collisionPlayerEnemy(Player player, Enemy enemy) {
+		
 		Point point;
 		Shape rect1=player.getPlayershape();
 		Shape rect2=enemy.getEnemyshape();
 		Image playerImage=player.getPlayerImage();
 		Image enemyImage=enemy.getEnemyImage();
+		
 		
 		int xstart = (int)rect1.getMinX();
 		int xend = (int)rect1.getMaxX();

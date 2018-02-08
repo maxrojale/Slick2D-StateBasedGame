@@ -4,7 +4,8 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Player {
+public class Player  {
+	
 
 		boolean collided;
 		Shape playershape;
@@ -29,9 +30,8 @@ public class Player {
 		}
 		
 		public void setStartingPosition() {
-		//	position = new float[] {50,50,50,98,98,75};
-		//	playershape = new Polygon(position);
-			playershape = new Rectangle(50,50,64,64);
+		position = new float[] {50,50,50,98,98,75};
+		playershape = new Polygon(position);
 		}
 		
 		public boolean isCollided() {
@@ -50,3 +50,4 @@ public class Player {
 		}
 
 }
+	
