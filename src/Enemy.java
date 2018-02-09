@@ -6,16 +6,8 @@ import org.newdawn.slick.geom.Shape;
 
 
 public class Enemy {
-<<<<<<< HEAD
-<<<<<<< HEAD
 	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletsize;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-=======
-	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletradius;
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
-	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletradius;
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 	private boolean toBeDeleted;
 	Shape enemyshape;
 	Image enemyImage;
@@ -27,7 +19,7 @@ public class Enemy {
 		this.sizey=sizey;
 		this.vectorx=vectorx;
 		this.vectory=vectory;
-		bulletsize=32;
+		bulletsize=4;
 		bulletdelay=0;
 		bulletvector=-20;
 		toBeDeleted=false;

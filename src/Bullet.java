@@ -1,3 +1,4 @@
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -15,7 +16,7 @@ public class Bullet {
 		this.size=size;
 		this.vector = vector;
 		delete = false;
-		shape = new Rectangle(position_x,position_y,size,size);
+		shape = new Circle(position_x,position_y,size);
 	}
 
 	public boolean getDelete() {

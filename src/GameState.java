@@ -29,22 +29,12 @@ public class GameState extends BasicGameState{
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
 	private Player player;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	CollisionHandler collisionHandler = new CollisionHandler();
 	boolean pixelperfectcollision;
+	private Enemy enemy;
+	private Random rnd;
+	Music music;
 	
-=======
-	private Enemy enemy;
-	private Random rnd;
-	Music music;
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
-	private Enemy enemy;
-	private Random rnd;
-	Music music;
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
@@ -67,8 +57,9 @@ public class GameState extends BasicGameState{
 		}
 		
 		boolean spawnenemy=true;
+		
 		//Spawn Enemies
-		if (enemies.size() < 7) {
+		if (enemies.size() < 100) {
 			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT),48,24,-5,0,GameData.enemyImage);
 			
 			for(int i=0; i < enemies.size();i++) {
@@ -79,10 +70,7 @@ public class GameState extends BasicGameState{
 			if (spawnenemy) {
 				enemies.add(enemy);
 				GameData.enemies = enemies;
-			}
-			spawnenemy=true;
-
-				
+			}		
 		}
 			
 
@@ -135,8 +123,6 @@ public class GameState extends BasicGameState{
 		//Collision Detection Player vs Enemies
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 				if(collisionHandler.CheckPlayerEnemyCollision(enemies.get(i),player)) {
 					player.setCollided(true);
 				}
@@ -149,7 +135,6 @@ public class GameState extends BasicGameState{
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
 					GameData.bullets = bullets;
 					GameData.enemies = enemies;
-					//pixelperfectcollision = collisionHandler.CheckCollision(j, i);
 					bullets.get(i).setDelete(true);
 					GameData.explosion.play();
 					GameData.score++;
@@ -158,22 +143,7 @@ public class GameState extends BasicGameState{
 				}
 			}
 		}
-=======
-					player.setCollided(true);
-				
-			}
-		}
-=======
-					player.setCollided(true);
-				
-			}
-		}
-		
-		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-		
-		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+			
 		
 		//Player Bullet Movement
 		for (int i=0; i < bullets.size(); i++) {
@@ -201,11 +171,12 @@ public class GameState extends BasicGameState{
 			enemies.get(i).shoot();
 			ebullets = GameData.enemybullets;
 		}
+		
 		//EnemyBulletsMovement & Collision vs Player
 		for (int i=0; i < ebullets.size(); i++) {
 			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
 			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
-				//player.setCollided(collisionHandler.CheckCollision(i));
+				player.setCollided(true);
 			}
 		}
 		
@@ -236,7 +207,6 @@ public class GameState extends BasicGameState{
 			}
 		}
 		
-		
 		//GameData Updater
 		GameData.player = player;
 		GameData.enemies = enemies;
@@ -253,90 +223,41 @@ public class GameState extends BasicGameState{
 			music.stop();
 			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 		}
-	/*	for (int i=0;i < enemies.size();i++) {
-			for(int j=0; j < enemies.get(i).getEnemyImage().getHeight();j++) {
-				for(int k=0; k < enemies.get(i).getEnemyImage().getWidth();k++) {
-					System.out.println(enemies.get(i).getEnemyImage().getColor(k, j).getAlpha());
-				}
-			}
-		} */
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
-			g.drawImage(background, background2_pos, 0);		
-<<<<<<< HEAD
-<<<<<<< HEAD
-			g.setColor(Color.magenta);
-			g.fill(player.getPlayershape());
-			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX(),player.getPlayershape().getMinY());		
-=======
+			g.drawImage(background, background2_pos, 0);			
 			//g.setColor(Color.magenta);
 			//g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
-			//g.setColor(Color.magenta);
-			//g.fill(player.getPlayershape());
-			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 			g.setColor(Color.cyan);
+		
 			for (int i=0; i < bullets.size(); i++) {
 				g.fill(bullets.get(i).getShape());
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
-<<<<<<< HEAD
-				g.setColor(Color.orange);
-				g.fill(ebullets.get(i).getShape());
-				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX(), ebullets.get(i).getShape().getMinY());
-=======
 				//g.setColor(Color.orange);
 				//g.fill(ebullets.get(i).getShape());
 				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
-<<<<<<< HEAD
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 			}
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-					g.setColor(Color.green);
-					g.fill(enemies.get(i).getEnemyshape());
-					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX(),enemies.get(i).getEnemyshape().getMinY());
-=======
 					//g.setColor(Color.green);
 					//g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
-					//g.setColor(Color.green);
-					//g.fill(enemies.get(i).getEnemyshape());
-					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 				}
 			}
 			g.setColor(Color.orange);
 			g.drawString(GameData.scoreString, 10, 10);
-<<<<<<< HEAD
-<<<<<<< HEAD
 		}		
-=======
 			
-					}		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
-=======
-			
-					}		
->>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 	}
 		
-	
 	
 	@Override
 	public int getID() {
