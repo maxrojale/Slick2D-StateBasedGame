@@ -1,6 +1,7 @@
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 public class CollisionHandler {
@@ -43,6 +44,8 @@ public class CollisionHandler {
 	}
 }
 =======
+=======
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 import org.newdawn.slick.geom.Shape;
 
 public class CollisionHandler {
@@ -78,4 +81,7 @@ public class CollisionHandler {
 	}
 	
 }
+<<<<<<< HEAD
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+=======
 >>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3

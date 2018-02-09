@@ -34,13 +34,19 @@ public class GameData {
 		enemy1Laser = new Sound ("res/enemy1laser.wav");
 		explosion = new Sound("res/explosion.wav");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		//playerImage.rotate(90);
 		//enemyImage.rotate(270);
 =======
+=======
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		music = new Music("res/boss.ogg");
 		playerImage.rotate(90);
 		enemyImage.rotate(270);
 		enemies.add(enemy1);
+<<<<<<< HEAD
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+=======
 >>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		player = new Player(playerImage);
 	}
@@ -53,6 +59,7 @@ public class GameData {
 		score=0;
 		scoreString= "Score: " + score;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		enemy1 = new Enemy(800,20,64,64,0,0,enemyImage);
 		enemy2 = new Enemy(800,120,64,64,-5,0,enemyImage);
 		enemy3 = new Enemy(800,220,64,64,-5,0,enemyImage);
@@ -64,6 +71,8 @@ public class GameData {
 		enemies.add(enemy4);
 		enemies.add(enemy5);
 =======
+=======
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		enemy1 = new Enemy(800,20,48,24,-5,0,enemyImage);
 	//	enemy2 = new Enemy(800,120,48,24,-5,0,enemyImage);
 	//	enemy3 = new Enemy(800,220,48,24,-5,0,enemyImage);
@@ -74,6 +83,9 @@ public class GameData {
 	//	enemies.add(enemy3);
 	//	enemies.add(enemy4);
 	//	enemies.add(enemy5);
+<<<<<<< HEAD
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+=======
 >>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 	}
 }

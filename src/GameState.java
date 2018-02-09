@@ -30,9 +30,15 @@ public class GameState extends BasicGameState{
 	public static int counter = 0;
 	private Player player;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CollisionHandler collisionHandler = new CollisionHandler();
 	boolean pixelperfectcollision;
 	
+=======
+	private Enemy enemy;
+	private Random rnd;
+	Music music;
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 =======
 	private Enemy enemy;
 	private Random rnd;
@@ -130,6 +136,7 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if(collisionHandler.CheckPlayerEnemyCollision(enemies.get(i),player)) {
 					player.setCollided(true);
 				}
@@ -156,6 +163,14 @@ public class GameState extends BasicGameState{
 				
 			}
 		}
+=======
+					player.setCollided(true);
+				
+			}
+		}
+		
+		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		
 		
 >>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
@@ -253,9 +268,15 @@ public class GameState extends BasicGameState{
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);		
 <<<<<<< HEAD
+<<<<<<< HEAD
 			g.setColor(Color.magenta);
 			g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX(),player.getPlayershape().getMinY());		
+=======
+			//g.setColor(Color.magenta);
+			//g.fill(player.getPlayershape());
+			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 =======
 			//g.setColor(Color.magenta);
 			//g.fill(player.getPlayershape());
@@ -275,15 +296,24 @@ public class GameState extends BasicGameState{
 				//g.setColor(Color.orange);
 				//g.fill(ebullets.get(i).getShape());
 				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
+<<<<<<< HEAD
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+=======
 >>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 			}
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					g.setColor(Color.green);
 					g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX(),enemies.get(i).getEnemyshape().getMinY());
+=======
+					//g.setColor(Color.green);
+					//g.fill(enemies.get(i).getEnemyshape());
+					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 =======
 					//g.setColor(Color.green);
 					//g.fill(enemies.get(i).getEnemyshape());
@@ -294,7 +324,12 @@ public class GameState extends BasicGameState{
 			g.setColor(Color.orange);
 			g.drawString(GameData.scoreString, 10, 10);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		}		
+=======
+			
+					}		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 =======
 			
 					}		
