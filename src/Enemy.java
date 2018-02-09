@@ -6,8 +6,12 @@ import org.newdawn.slick.geom.Shape;
 
 
 public class Enemy {
-	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletradius;
+<<<<<<< HEAD
+	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletsize;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+=======
+	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletradius;
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 	private boolean toBeDeleted;
 	Shape enemyshape;
 	Image enemyImage;
@@ -19,7 +23,7 @@ public class Enemy {
 		this.sizey=sizey;
 		this.vectorx=vectorx;
 		this.vectory=vectory;
-		bulletradius=4;
+		bulletsize=32;
 		bulletdelay=0;
 		bulletvector=-20;
 		toBeDeleted=false;
@@ -38,7 +42,7 @@ public class Enemy {
 
 	public void shoot() {
 		if (bulletdelay<=0) {
-			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletradius,bulletvector);
+			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletsize,bulletvector);
 			GameData.enemybullets.add(bullet);
 			GameData.enemy1Laser.play();
 			bulletdelay=20;
@@ -46,40 +50,8 @@ public class Enemy {
 		else {
 			bulletdelay--;
 		}
-		collisioncheck();
 	}
 	
-	private void collisioncheck() {
-		for (int i=0; i < bullets.size();i++) {
-			if(bullets.get(i).getShape().intersects(GameData.player.getPlayershape())) {
-				bullets.get(i).getShape().setCenterX(GameData.player.getPlayershape().getCenterX()-100);
-				bullets.get(i).setDelete(true);
-			}
-		}
-	}
-	
-	public void updateBullets() {
-		
-		//Bullet Movement and Clean Up Checker
-		for (int i=0; i < bullets.size(); i++) {
-			bullets.get(i).getShape().setCenterX(bullets.get(i).getShape().getCenterX()+bulletvector);
-			if (bullets.get(i).getShape().getCenterX() <= 1 || bullets.get(i).getShape().getCenterX() >= 950) {
-				bullets.get(i).setDelete(true);
-			}
-		}
-		
-		//Bullet Cleanup
-		for (int i=0; i < bullets.size(); i++) {
-			if (bullets.get(i).getDelete()==true) {
-				bullets.remove(i);
-			}
-		}
-	}
-	
-	public ArrayList<Bullet> getBullets() {
-		return bullets;
-	}
-
 	public int getSizex() {
 		return sizex;
 	}

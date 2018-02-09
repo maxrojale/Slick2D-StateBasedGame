@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
@@ -27,7 +29,15 @@ public class GameState extends BasicGameState{
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	public static int counter = 0;
 	private Player player;
+<<<<<<< HEAD
+	CollisionHandler collisionHandler = new CollisionHandler();
+	boolean pixelperfectcollision;
 	
+=======
+	private Enemy enemy;
+	private Random rnd;
+	Music music;
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
@@ -39,12 +49,37 @@ public class GameState extends BasicGameState{
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
-		//GameData.music.loop();
+		rnd = new Random();
+		music = GameData.music;
 	}
 	
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
+		if(!music.playing()) {
+			music.loop();
+		}
+		
+		boolean spawnenemy=true;
+		//Spawn Enemies
+		if (enemies.size() < 7) {
+			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT),48,24,-5,0,GameData.enemyImage);
+			
+			for(int i=0; i < enemies.size();i++) {
+				if (enemies.get(i).getEnemyshape().intersects(enemy.getEnemyshape())) {
+					spawnenemy=false;
+				}
+			}
+			if (spawnenemy) {
+				enemies.add(enemy);
+				GameData.enemies = enemies;
+			}
+			spawnenemy=true;
+
+				
+		}
+			
+
 		
 		//Background Movement
 		if (background_pos >= 0-Setup.WIDTH) {
@@ -85,20 +120,19 @@ public class GameState extends BasicGameState{
 		//Enemy Movement
 		for (int i=0; i < enemies.size();i++) {
 			enemies.get(i).getEnemyshape().setCenterX(enemies.get(i).getEnemyshape().getCenterX()+enemies.get(i).getVectorx());
-			if (enemies.get(i).getEnemyshape().getCenterX()<=50) {
-				enemies.get(i).setVectorx(5);
-				enemies.get(i).getEnemyshape().setCenterY(enemies.get(i).getEnemyshape().getCenterY()+10);
-			}
-			if (enemies.get(i).getEnemyshape().getCenterX() >= Setup.WIDTH-50) {
-				enemies.get(i).setVectorx(-5);
-				enemies.get(i).getEnemyshape().setCenterY(enemies.get(i).getEnemyshape().getCenterY()-10);
+			if (enemies.get(i).getEnemyshape().getCenterX()<=-100) {
+				enemies.remove(i);
+				GameData.enemies = enemies;
 			}
 		}
 		
 		//Collision Detection Player vs Enemies
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
-				player.setCollided(true);
+<<<<<<< HEAD
+				if(collisionHandler.CheckPlayerEnemyCollision(enemies.get(i),player)) {
+					player.setCollided(true);
+				}
 			}
 		}
 		
@@ -106,13 +140,25 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < bullets.size(); i++) {
 			for (int j=0; j < enemies.size(); j++) {
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
+					GameData.bullets = bullets;
+					GameData.enemies = enemies;
+					//pixelperfectcollision = collisionHandler.CheckCollision(j, i);
 					bullets.get(i).setDelete(true);
 					GameData.explosion.play();
 					GameData.score++;
 					GameData.scoreString = "Score: " + GameData.score;
-					enemies.remove(j);				}
+					enemies.remove(j);	
+				}
 			}
 		}
+=======
+					player.setCollided(true);
+				
+			}
+		}
+		
+		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		
 		//Player Bullet Movement
 		for (int i=0; i < bullets.size(); i++) {
@@ -122,8 +168,21 @@ public class GameState extends BasicGameState{
 			bulletdelay--;
 		}
 		
+		//Collision Detection Player Bullets vs Enemies
+				for (int i=0; i < bullets.size(); i++) {
+					for (int j=0; j < enemies.size(); j++) {
+						if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
+							bullets.get(i).setDelete(true);
+							GameData.explosion.play();
+							GameData.score++;
+							GameData.scoreString = "Score: " + GameData.score;
+							enemies.remove(j);				}
+					}
+				}
+		
 		//Enemies Shoot
 		for (int i=0; i < enemies.size(); i++) {
+			if(enemies.get(i).getEnemyshape().getCenterX()<Setup.WIDTH && enemies.get(i).getEnemyshape().getCenterX() > 0)
 			enemies.get(i).shoot();
 			ebullets = GameData.enemybullets;
 		}
@@ -131,7 +190,7 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < ebullets.size(); i++) {
 			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
 			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
-				player.setCollided(true);
+				//player.setCollided(collisionHandler.CheckCollision(i));
 			}
 		}
 		
@@ -175,9 +234,17 @@ public class GameState extends BasicGameState{
 			ebullets.clear();
 			bullets.clear();
 			GameData.initializeGameData();
-			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 			in.clearKeyPressedRecord();
+			music.stop();
+			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
 		}
+	/*	for (int i=0;i < enemies.size();i++) {
+			for(int j=0; j < enemies.get(i).getEnemyImage().getHeight();j++) {
+				for(int k=0; k < enemies.get(i).getEnemyImage().getWidth();k++) {
+					System.out.println(enemies.get(i).getEnemyImage().getColor(k, j).getAlpha());
+				}
+			}
+		} */
 	}
 
 	@Override
@@ -185,32 +252,53 @@ public class GameState extends BasicGameState{
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);		
-	
-			g.drawImage(player.getPlayerImage(),player.getPlayershape().getX()-10,player.getPlayershape().getY()-6);		
+<<<<<<< HEAD
+			g.setColor(Color.magenta);
+			g.fill(player.getPlayershape());
+			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX(),player.getPlayershape().getMinY());		
+=======
+			//g.setColor(Color.magenta);
+			//g.fill(player.getPlayershape());
+			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 			g.setColor(Color.cyan);
 			for (int i=0; i < bullets.size(); i++) {
 				g.fill(bullets.get(i).getShape());
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
+<<<<<<< HEAD
+				g.setColor(Color.orange);
+				g.fill(ebullets.get(i).getShape());
+				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX(), ebullets.get(i).getShape().getMinY());
+=======
 				//g.setColor(Color.orange);
 				//g.fill(ebullets.get(i).getShape());
-				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-5, ebullets.get(i).getShape().getMinY()-10);
+				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 			}
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted()) {
-					//g.setColor(Color.red);
+<<<<<<< HEAD
+					g.setColor(Color.green);
+					g.fill(enemies.get(i).getEnemyshape());
+					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX(),enemies.get(i).getEnemyshape().getMinY());
+=======
+					//g.setColor(Color.green);
 					//g.fill(enemies.get(i).getEnemyshape());
-					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getX()-5,enemies.get(i).getEnemyshape().getY()-19);
+					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 				}
 			}
 			g.setColor(Color.orange);
 			g.drawString(GameData.scoreString, 10, 10);
-			
-			
-			//System.out.println(GameData.enemyImage.get
+<<<<<<< HEAD
 		}		
+=======
+			
+					}		
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 	}
 		
 	

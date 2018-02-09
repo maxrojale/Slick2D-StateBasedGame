@@ -1,14 +1,18 @@
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+<<<<<<< HEAD
+=======
 import org.newdawn.slick.geom.Polygon;
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Player {
+public class Player  {
+	
 
 		boolean collided;
 		Shape playershape;
 		Image playerImage;
-		float[] position;
 		
 		public Player (int posx, int posy, Image playerImage) {
 			this.playerImage = playerImage;
@@ -28,8 +32,12 @@ public class Player {
 		}
 		
 		public void setStartingPosition() {
-			position = new float[] {50,50,50,98,98,75};
-			playershape = new Polygon(position);
+<<<<<<< HEAD
+			playershape=new Rectangle(50,50,64,64);
+=======
+		position = new float[] {50,50,50,98,98,75};
+		playershape = new Polygon(position);
+>>>>>>> 484544b97d6d00c38d64d7df09c77cf15da971e3
 		}
 		
 		public boolean isCollided() {
@@ -48,3 +56,4 @@ public class Player {
 		}
 
 }
+	

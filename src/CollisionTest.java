@@ -6,8 +6,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -22,17 +24,63 @@ public class CollisionTest extends BasicGameState {
 	String RectangleCollision;
 	String PCollision;
 	public boolean pixelcollision;
+	public Shape playerpolygon;
+	float playerpolygonpoints[];
+	boolean playerbitmask[][];
+	boolean enemybitmask[][];
+	float playerxcorrection;
+	float playerycorrection;
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		rect1=new Rectangle(550,250,64,64);
 		rect2=new Rectangle(600,300,64,64);
+		playerxcorrection=-6.5f;
+		playerycorrection=-10f;
 		playerImage=new Image("res/player.png");
 		enemyImage=new Image("res/enemy1.png");
+		playerImage.rotate(90);
+		//playerbitmask = new boolean[playerImage.getWidth()][playerImage.getHeight()];
+		//enemybitmask = new boolean[enemyImage.getWidth()][enemyImage.getHeight()];
+		playerpolygonpoints = new float[]{100,148,124,100,148,148};
+		
+		
 		RectangleCollision="Rectangle: No Collision";
 		PCollision="Pixel: No Collision";
+
+	/*	for(int i=0; i < playerImage.getHeight(); i++) {
+			for(int j=0; j <playerImage.getWidth();j++) {
+				if(playerImage.getColor(j, i).getAlpha()==255) {
+					playerbitmask[j][i]=true;
+				}
+				else {
+					playerbitmask[j][i]=false;
+				}
+				
+			}
+		}
+		
+		for(int i=0; i < enemyImage.getHeight(); i++) {
+			for(int j=0; j <enemyImage.getWidth();j++) {
+				if(enemyImage.getColor(j, i).getAlpha()==255) {
+					enemybitmask[j][i]=true;
+				}
+				else {
+					enemybitmask[j][i]=false;
+				}		
+			}
+		}		
+		
+	*/
+		
+		playerpolygon = new Polygon(playerpolygonpoints);
+		playerpolygon = playerpolygon.transform(Transform.createRotateTransform((float)Math.toRadians(90),playerpolygon.getCenterX(),playerpolygon.getCenterY()));
+		playerxcorrection=-12f;
+		playerycorrection=-6.5f;
 	}
+	
+	
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
@@ -77,14 +125,19 @@ public class CollisionTest extends BasicGameState {
 		int xend2 = (int)rect2.getMaxX();
 		int ystart2 = (int)rect2.getMinY();
 		int yend2 = (int)rect2.getMaxY();
+		
+		
+		
+	
 		for (int i = ystart; i < yend; i++) {
 			for (int j = xstart; j < xend; j++) {
 				point=new Point(j,i);
 				if(rect2.contains(point)) {
-					if (playerImage.getColor(j-xstart,i-ystart).getAlpha()>128 && enemyImage.getColor(j-xstart2, i-ystart2).getAlpha()>128) {
-						pixelcollision=true;
-						return pixelcollision;
-					}
+					return true;
+					//if (playerbitmask[j-xstart][i-ystart]==true && enemybitmask[j-xstart2][i-ystart2]==true) {
+						//pixelcollision=true;
+						//return pixelcollision;
+					//}
 				}
 			}
 		}
@@ -96,10 +149,11 @@ public class CollisionTest extends BasicGameState {
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
-		//g.setColor(Color.cyan);
+		g.setColor(Color.cyan);
+		g.fill(playerpolygon);
 		//g.fill(rect1);
 		enemyImage.draw(rect2.getMinX(),rect2.getMinY());
-		playerImage.draw(rect1.getMinX(),rect1.getMinY());
+		playerImage.draw(playerpolygon.getMinX()+playerxcorrection,playerpolygon.getMinY()+playerycorrection);
 		//g.setColor(Color.magenta);
 		//g.fill(rect2);
 		g.setColor(Color.white);
