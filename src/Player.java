@@ -30,8 +30,8 @@ public class Player  {
 		}
 		
 		public void setStartingPosition() {
-		position = new float[] {50,50,50,98,98,75};
-		playershape = new Polygon(position);
+			position = new float[] {50,50,50,98,98,75};
+			playershape = new Polygon(position);
 		}
 		
 		public boolean isCollided() {

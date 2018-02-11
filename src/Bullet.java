@@ -1,21 +1,22 @@
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Bullet {
 
 	private float position_x, position_y;
-	@SuppressWarnings("unused")
-	private int vector, radius;
+	private int vector, size;
 	private Shape shape;
 	boolean delete;
 	
-	public Bullet(float position_x, float position_y, int radius, int vector) {
+	
+	public Bullet(float position_x, float position_y, int size, int vector) {
 		this.position_x = position_x;
 		this.position_y = position_y;
-		this.radius = radius;
+		this.size=size;
 		this.vector = vector;
 		delete = false;
-		shape = new Circle(position_x,position_y,radius);
+		shape = new Circle(position_x,position_y,size);
 	}
 
 	public boolean getDelete() {
