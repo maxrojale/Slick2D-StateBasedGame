@@ -35,14 +35,9 @@ public class GameData {
 		explosion = new Sound("res/explosion.wav");
 		music = new Music("res/boss.ogg");
 		playerImage.rotate(90);
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//	enemyImage.rotate(270);
 		enemies.add(enemy1);
-=======
->>>>>>> 72a60245c9c510c08a4e47ac2a30b3cb78449c1f
-=======
->>>>>>> 72a60245c9c510c08a4e47ac2a30b3cb78449c1f
+
 		enemyImage.rotate(270);
 		player = new Player(playerImage);
 	}
