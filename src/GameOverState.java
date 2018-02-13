@@ -24,7 +24,7 @@ public class GameOverState extends BasicGameState {
 		
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			GameData.GameOver=false;
-			GameData.score=0;
+			GameData.restart=true;
 			in.clearKeyPressedRecord();
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}

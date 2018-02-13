@@ -13,6 +13,7 @@ public class GameData {
 	public static ArrayList<Bullet> enemybullets = new ArrayList<Bullet>();
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	public static boolean GameOver = false;
+	public static boolean restart = false;
 	public static Music music;
 	public static Image playerImage;
 	public static Image enemyImage;

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,8 +8,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -59,6 +56,11 @@ public class GameState extends BasicGameState{
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
+		if (GameData.restart) {
+			GameData.score=0;
+			GameData.restart=false;
+		}
+				
 		if(!music.playing()) {
 			music.loop();
 		}
