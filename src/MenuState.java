@@ -41,7 +41,8 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g)
 			throws SlickException {
-			g.drawImage(menuImage, 0, 0, 960, 540,0,0,320,240);
+			//g.drawImage(menuImage, 0, 0, 960, 540,0,0,320,240);
+			g.drawImage(menuImage,0,0);
 			g.drawString("Press Space to start the Game", Setup.WIDTH/2-150, Setup.HEIGHT/2);
 	}
 

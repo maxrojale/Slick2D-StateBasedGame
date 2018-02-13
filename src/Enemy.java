@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Shape;
 public class Enemy {
 	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletsize;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	private boolean toBeDeleted;
+	private boolean toBeDeleted, wasHit;
 	Shape enemyshape;
 	Image enemyImage;
 
@@ -110,6 +110,15 @@ public class Enemy {
 	}
 	public Image getEnemyImage() {
 		return enemyImage;
+	}
+	public boolean WasHit() {
+		return wasHit;
+		
+	}
+
+	public void setWasHit(boolean wasHit) {
+		this.wasHit = wasHit;
+		//toBeDeleted=true;
 	}
 
 }
