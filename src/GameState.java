@@ -37,7 +37,6 @@ public class GameState extends BasicGameState{
 	private Enemy enemy;
 	private Explosion explosion;
 	private Random rnd;
-	boolean playanimation;
 	Music music;
 	//private AnimationHandler animationHandler;
 
@@ -55,7 +54,6 @@ public class GameState extends BasicGameState{
 		enemies = GameData.enemies;
 		rnd = new Random();
 		music = GameData.music;
-		playanimation = true;
 	}
 	
 	
@@ -132,9 +130,8 @@ public class GameState extends BasicGameState{
 		//Collision Detection Player vs Enemies
 		for (int i=0; i < enemies.size();i++) {
 			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
-				if(collisionHandler.CheckPlayerEnemyCollision(enemies.get(i),player)) {
 					player.setCollided(true);
-				}
+				
 			}
 		}
 		
@@ -265,7 +262,7 @@ public class GameState extends BasicGameState{
 				explosions.get(i).getAnimation().draw(explosions.get(i).getX(),explosions.get(i).getY());
 			}
 			g.setColor(Color.orange);
-			g.drawString(GameData.scoreString, 10, 10);
+			g.drawString("Score: " + GameData.score, 10, 10);
 		}		
 	}
 		
