@@ -52,7 +52,6 @@ public class GameData {
 		bullets.clear();
 		player.setStartingPosition();
 		player.setCollided(false);
-		score=0;
 		scoreString= "Score: " + score;
 
 	}
