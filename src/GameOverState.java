@@ -25,6 +25,7 @@ public class GameOverState extends BasicGameState {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			GameData.GameOver=false;
 			in.clearKeyPressedRecord();
+			GameData.initializeGameData();
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}
 	}
@@ -32,6 +33,8 @@ public class GameOverState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g)
 			throws SlickException {
+		g.setColor(Color.orange);
+		g.drawString("Final " + GameData.scoreString, Setup.WIDTH/2-150, Setup.HEIGHT/2+20);
 		g.setColor(Color.white);
 		g.drawString("Game Over.... Press ESC to Restart", Setup.WIDTH/2-150, Setup.HEIGHT/2);
 	}

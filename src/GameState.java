@@ -59,7 +59,7 @@ public class GameState extends BasicGameState{
 		boolean spawnenemy=true;
 		
 		//Spawn Enemies
-		if (enemies.size() < 100) {
+		if (enemies.size() < 7) {
 			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT),48,24,-5,0,GameData.enemyImage);
 			
 			for(int i=0; i < enemies.size();i++) {
@@ -105,6 +105,7 @@ public class GameState extends BasicGameState{
 		}
 	
 		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0) {
+			player.shoot();
 			Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20);
 			bullets.add(bullet);
 			GameData.playerLaser.play();
@@ -218,7 +219,6 @@ public class GameState extends BasicGameState{
 			enemies.clear();
 			ebullets.clear();
 			bullets.clear();
-			GameData.initializeGameData();
 			in.clearKeyPressedRecord();
 			music.stop();
 			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
