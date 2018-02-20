@@ -224,11 +224,10 @@ public class GameState extends BasicGameState{
 			enemies.clear();
 			ebullets.clear();
 			bullets.clear();
-<<<<<<< HEAD
-=======
+
 			explosions.clear();
 			GameData.initializeGameData();
->>>>>>> 4f38bb856a9169826e15bcf9e6a0394dded79c50
+
 			in.clearKeyPressedRecord();
 			music.stop();
 			gsm.enterState(9,new FadeOutTransition(), new FadeInTransition());
