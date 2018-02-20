@@ -24,6 +24,7 @@ public class GameOverState extends BasicGameState {
 		
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			GameData.GameOver=false;
+			GameData.restart=true;
 			in.clearKeyPressedRecord();
 			GameData.initializeGameData();
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
@@ -37,6 +38,8 @@ public class GameOverState extends BasicGameState {
 		g.drawString("Final " + GameData.scoreString, Setup.WIDTH/2-150, Setup.HEIGHT/2+20);
 		g.setColor(Color.white);
 		g.drawString("Game Over.... Press ESC to Restart", Setup.WIDTH/2-150, Setup.HEIGHT/2);
+		g.setColor(Color.orange);
+		g.drawString("Final Score: " + GameData.score, Setup.WIDTH/2-150, Setup.HEIGHT/2+50);
 	}
 
 	@Override
