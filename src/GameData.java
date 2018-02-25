@@ -27,9 +27,11 @@ public class GameData {
 	public static Enemy enemy4;
 	public static Enemy enemy5;
 	public static int score;
+	public static int tilesize;
 	public static String scoreString;
 	public static Animation explosionAnimation;
 	public static SpriteSheet explosionSheet;
+	public static GameMap level1;
 	
 	public static void loadGameFiles() throws SlickException {
 		playerImage = new Image("res/player.png");
@@ -48,12 +50,17 @@ public class GameData {
 		player = new Player(playerImage);
 	}
 	
-	public static void initializeGameData() {
+	public static void initializeGameData() throws SlickException {
+		tilesize=64;
+		level1 = new GameMap(Setup.WIDTH*4/tilesize,Setup.HEIGHT/tilesize);
+		System.out.println(level1.getMap().length);
+		System.out.println(level1.getMap()[0].length);
 		enemies.clear();
 		bullets.clear();
 		player.setStartingPosition();
 		player.setCollided(false);
 		scoreString= "Score: " + score;
+		tilesize=64;
 
 	}
 }
