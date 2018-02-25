@@ -43,7 +43,7 @@ public class LevelEditor extends BasicGameState {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
 		}
-		if (in.isKeyDown(Input.KEY_RIGHT) && position < 45) {
+		if (in.isKeyPressed(Input.KEY_RIGHT) && position < 45) {
 			position++;
 		}
 		if (in.isKeyDown(Input.KEY_LEFT) && position > 0) {
@@ -77,13 +77,14 @@ public class LevelEditor extends BasicGameState {
 				g.setColor(Color.white);
 				String coords = "x: " +(j+position);
 				g.drawString(coords, j*tilesize, i*tilesize);
-				if (map.getMap()[i][j+position].getID()==0) {
-					g.drawImage(GameData.playerImage, j*tilesize,i*tilesize);
-				}
-				if (map.getMap()[i][j+position].getID()==1) {
-					g.drawImage(GameData.enemyImage, j*tilesize, i*tilesize);
-					
-				}
+		//		if (map.getMap()[i][j+position].getID()==0) {
+		//			g.drawImage(GameData.playerImage, j*tilesize+10,i*tilesize);
+	//			}
+				
+		//		if (map.getMap()[i][j+position].getID()==1) {
+		//			g.drawImage(GameData.enemyImage, j*tilesize, i*tilesize);
+		//			
+		//		}
 			}
 		}
 	}
