@@ -42,10 +42,7 @@ public class GameState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		//animationHandler = new AnimationHandler();
-		background=new Image("res/starfield2.png");
-		player = GameData.player;
-		GameData.loadGameFiles();
-		GameData.initializeGameData();
+
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
