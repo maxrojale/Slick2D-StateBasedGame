@@ -11,12 +11,17 @@ public class Player  {
 		Shape playershape;
 		Image playerImage;
 		float[] position;
+		int hp;
 		
 		public Player (int posx, int posy, Image playerImage) {
 			this.playerImage = playerImage;
 			setStartingPosition();
+			hp=100;
 		}
 		
+		public void shoot() {
+			
+		}
 		
 		public Player (Image playerImage) {
 			setStartingPosition();	
