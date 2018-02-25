@@ -27,7 +27,7 @@ public class LevelEditor extends BasicGameState {
 	private Image background;
 	private Player player;
 	Input in;
-	private MapTools maptools;
+	int position;
 	
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
@@ -36,11 +36,18 @@ public class LevelEditor extends BasicGameState {
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
 		map=GameData.level1;
+		position=0;
 	}
 
 	public void update(GameContainer gc, StateBasedGame gsm, int delta) throws SlickException {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
+		}
+		if (in.isKeyDown(Input.KEY_RIGHT) && position < 45) {
+			position++;
+		}
+		if (in.isKeyDown(Input.KEY_LEFT) && position > 0) {
+			position--;
 		}
 		if (in.isKeyPressed(Input.KEY_S)) {
 			saveMap();
@@ -50,12 +57,12 @@ public class LevelEditor extends BasicGameState {
 		}
 		
 		if (in.isMousePressed(0)) {
-			int x = in.getAbsoluteMouseX() / tilesize;
+			int x = in.getAbsoluteMouseX() / tilesize + position;
 			int y = in.getAbsoluteMouseY() / tilesize;
 			map.setMapTile(x, y, new AnotherTile());
 		}
 		if (in.isMousePressed(1)) {
-			int x = in.getAbsoluteMouseX() / tilesize;
+			int x = in.getAbsoluteMouseX() / tilesize + position;
 			int y = in.getAbsoluteMouseY() / tilesize;
 			map.setMapTile(x, y, new EmptyTile());
 		}
@@ -63,14 +70,17 @@ public class LevelEditor extends BasicGameState {
 	
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
 		background.draw(0,0);
-		g.setColor(Color.orange);
 		for (int i = 0; i < map.getMap().length;i++) {
-			for (int j =0; j < map.getMap()[0].length;j++) {
+			for (int j =0; j < Setup.WIDTH/tilesize;j++) {
+				g.setColor(Color.orange);
 				g.drawRect(j*tilesize, i*tilesize, tilesize, tilesize);
-				if (map.getMap()[i][j].getID()==0) {
+				g.setColor(Color.white);
+				String coords = "x: " +(j+position);
+				g.drawString(coords, j*tilesize, i*tilesize);
+				if (map.getMap()[i][j+position].getID()==0) {
 					g.drawImage(GameData.playerImage, j*tilesize,i*tilesize);
 				}
-				if (map.getMap()[i][j].getID()==1) {
+				if (map.getMap()[i][j+position].getID()==1) {
 					g.drawImage(GameData.enemyImage, j*tilesize, i*tilesize);
 					
 				}
