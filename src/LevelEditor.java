@@ -1,6 +1,8 @@
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.newdawn.slick.Color;
@@ -41,14 +43,10 @@ public class LevelEditor extends BasicGameState {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
 		}
 		if (in.isKeyPressed(Input.KEY_S)) {
-			try (FileOutputStream fos = new FileOutputStream ("res/level.map");
-				     ObjectOutputStream oos = new ObjectOutputStream (fos)) {
-					oos.writeObject (map);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			saveMap();
+		}
+		if (in.isKeyPressed(Input.KEY_L)) {
+			loadMap();
 		}
 		
 		if (in.isMousePressed(0)) {
@@ -78,6 +76,29 @@ public class LevelEditor extends BasicGameState {
 				}
 			}
 		}
+	}
+	
+	public void saveMap() {
+		try (FileOutputStream fos = new FileOutputStream ("res/level.map");
+			     ObjectOutputStream oos = new ObjectOutputStream (fos)) {
+				oos.writeObject (map);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadMap() {
+		try (FileInputStream fis = new FileInputStream ("res/level.map");
+			    ObjectInputStream ois = new ObjectInputStream (fis)) {
+			 	map = (GameMap) ois.readObject ();
+		
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	
