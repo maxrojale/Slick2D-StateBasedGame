@@ -237,7 +237,7 @@ public class GameState extends BasicGameState{
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);			
 			g.setColor(Color.magenta);
-			g.fill(player.getPlayershape());
+			//g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
 			g.setColor(Color.cyan);
 		

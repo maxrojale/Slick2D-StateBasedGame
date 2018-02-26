@@ -24,17 +24,14 @@ public class LevelEditor extends BasicGameState {
 	
 	private int tilesize = 64;
 	private int scroller;
-	boolean ScrollingLeftEnabled, ScrollingRightEnabled;
 	private GameMap map;
 	private Image background;
-	private Player player;
 	Input in;
 	int position;
 	
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
 		in = gc.getInput();
 		background=new Image("res/starfield2.png");
-		player = GameData.player;
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
 		map=GameData.level1;
@@ -51,9 +48,9 @@ public class LevelEditor extends BasicGameState {
 			if(position == 44 && scroller == 64);
 			
 			else {
-			scroller+=8;
+			scroller+=2;
 				if(scroller>64) {
-					scroller=8;
+					scroller=2;
 					position++;
 				}
 			}
@@ -64,9 +61,9 @@ public class LevelEditor extends BasicGameState {
 			if(position == 0 && scroller ==0);
 			
 			else {
-				scroller-=8;
+				scroller-=2;
 				if(scroller<0) {
-					scroller=64;
+					scroller=62;
 					position--;
 				}
 			}

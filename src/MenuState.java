@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,6 +14,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class MenuState extends BasicGameState {
 	
 	private Input in;
+	private int highlightedMenuItem;
 	private Image menuImage;
 	private Music menuMusic;
 	
@@ -22,6 +24,7 @@ public class MenuState extends BasicGameState {
 		in = gc.getInput();
 		menuImage = new Image("res/mainMenue.png");
 		menuMusic = new Music("res/boss.ogg");
+		highlightedMenuItem=1;
 	}
 
 	@Override
@@ -37,6 +40,34 @@ public class MenuState extends BasicGameState {
 			menuMusic.stop();
 			gsm.enterState(7,new FadeOutTransition(), new FadeInTransition());
 		}
+		if (in.isKeyPressed(Input.KEY_UP)) {
+			highlightedMenuItem--;
+			if(highlightedMenuItem==0) {
+				highlightedMenuItem=3;
+			}
+		}
+		if (in.isKeyPressed(Input.KEY_DOWN)) {
+			highlightedMenuItem++;
+			if(highlightedMenuItem==4) {
+				highlightedMenuItem=1;
+			}
+		}
+		if (in.isKeyPressed(Input.KEY_SPACE) || in.isKeyPressed(Input.KEY_RETURN)) {
+			switch(highlightedMenuItem) {
+				case 1: 
+					menuMusic.stop();
+					gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
+					break;
+				case 2:
+					menuMusic.stop();
+					gsm.enterState(7,new FadeOutTransition(), new FadeInTransition());
+					break;
+				
+				default:
+					break;
+			}
+			
+		}
 	}
 	
 	@Override
@@ -44,7 +75,34 @@ public class MenuState extends BasicGameState {
 			throws SlickException {
 			//g.drawImage(menuImage, 0, 0, 960, 540,0,0,320,240);
 			g.drawImage(menuImage,0,0);
-			g.drawString("Press Space to start the Game", Setup.WIDTH/2-150, Setup.HEIGHT/2);
+			if(highlightedMenuItem==1) {
+				g.setColor(Color.orange);
+				g.drawString("Game",Setup.WIDTH/2, Setup.HEIGHT/2-100);
+				g.setColor(Color.white);
+			}
+			else {
+				g.drawString("Game",Setup.WIDTH/2, Setup.HEIGHT/2-100);
+			}
+			
+			if(highlightedMenuItem==2) {
+				g.setColor(Color.orange);
+				g.drawString("Editor",Setup.WIDTH/2, Setup.HEIGHT/2-50);
+				g.setColor(Color.white);
+			}
+			else {
+				g.drawString("Editor",Setup.WIDTH/2, Setup.HEIGHT/2-50);
+			}
+			
+			if(highlightedMenuItem==3) {
+				g.setColor(Color.orange);
+				g.drawString("Quit",Setup.WIDTH/2, Setup.HEIGHT/2);
+				g.setColor(Color.white);
+			}
+			else {
+				g.drawString("Quit",Setup.WIDTH/2, Setup.HEIGHT/2);
+			}
+			
+	
 	}
 
 	@Override

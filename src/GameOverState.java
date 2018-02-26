@@ -27,7 +27,7 @@ public class GameOverState extends BasicGameState {
 			GameData.restart=true;
 			in.clearKeyPressedRecord();
 			GameData.initializeGameData();
-			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
+			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
 		}
 
 	}
