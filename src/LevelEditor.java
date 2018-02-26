@@ -23,7 +23,7 @@ import Tiles.EmptyTile;
 public class LevelEditor extends BasicGameState {
 	
 	private int tilesize = 64;
-	private int scroller, mousecorrection;
+	private int scroller;
 	boolean ScrollingLeftEnabled, ScrollingRightEnabled;
 	private GameMap map;
 	private Image background;
@@ -47,11 +47,9 @@ public class LevelEditor extends BasicGameState {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
 		}
 
-		//Garbage Code but does work
 		if (in.isKeyDown(Input.KEY_RIGHT)) {
-			if(position == 44 && scroller == 64) {
-				
-			}
+			if(position == 44 && scroller == 64);
+			
 			else {
 			scroller+=8;
 				if(scroller>64) {
@@ -63,9 +61,7 @@ public class LevelEditor extends BasicGameState {
 		}
 
 		if (in.isKeyDown(Input.KEY_LEFT)) {
-			//Garbage Code but does work
-			if(position == 0 && scroller ==0) {
-			}
+			if(position == 0 && scroller ==0);
 			
 			else {
 				scroller-=8;

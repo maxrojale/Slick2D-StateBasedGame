@@ -30,13 +30,13 @@ public class CollisionHandler {
 				System.out.println("i :" +(i-ystart_enemy));
 				
 				if (enemy.getEnemyshape().contains(collisionPoint)) {
-				//	if(enemyImage.getColor(j-xstart_enemy, i-xstart_enemy).getAlpha()==255) {
-						return false;
+					if(enemyImage.getColor(j-xstart_enemy, i-xstart_enemy).getAlpha()==255) {
+						return true;
 					}
 				}
 			
 			}
-		//}
+		}
 		return false;
 	}
 }
