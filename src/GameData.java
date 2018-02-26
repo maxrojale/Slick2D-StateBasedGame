@@ -53,8 +53,6 @@ public class GameData {
 	public static void initializeGameData() throws SlickException {
 		tilesize=64;
 		level1 = new GameMap(Setup.WIDTH*4/tilesize,Setup.HEIGHT/tilesize);
-		System.out.println(level1.getMap().length);
-		System.out.println(level1.getMap()[0].length);
 		enemies.clear();
 		bullets.clear();
 		player.setStartingPosition();
