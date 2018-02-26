@@ -29,25 +29,25 @@ public class GameState extends BasicGameState{
 	ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 	public static int counter = 0;
 	private Player player;
-	CollisionHandler collisionHandler = new CollisionHandler();
 	boolean pixelperfectcollision;
 	private Enemy enemy;
 	private Explosion explosion;
 	private Random rnd;
 	Music music;
-	//private AnimationHandler animationHandler;
 
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
+		GameData.loadGameFiles();
+		GameData.initializeGameData();
+		background=new Image("res/starfield2.png");
 		in = gc.getInput();
-		//animationHandler = new AnimationHandler();
-
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
 		rnd = new Random();
 		music = GameData.music;
+		
 	}
 	
 	
@@ -230,13 +230,14 @@ public class GameState extends BasicGameState{
 	
 	}
 
-	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
+
+		
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);			
-			//g.setColor(Color.magenta);
-			//g.fill(player.getPlayershape());
+			g.setColor(Color.magenta);
+			g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
 			g.setColor(Color.cyan);
 		
@@ -262,7 +263,8 @@ public class GameState extends BasicGameState{
 			}
 			g.setColor(Color.orange);
 			g.drawString("Score: " + GameData.score, 10, 10);
-		}		
+		}
+			
 	}
 		
 	

@@ -23,6 +23,8 @@ import Tiles.EmptyTile;
 public class LevelEditor extends BasicGameState {
 	
 	private int tilesize = 64;
+	private int scroller, mousecorrection;
+	boolean ScrollingLeftEnabled, ScrollingRightEnabled;
 	private GameMap map;
 	private Image background;
 	private Player player;
@@ -36,6 +38,7 @@ public class LevelEditor extends BasicGameState {
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
 		map=GameData.level1;
+		scroller = 0;
 		position=0;
 	}
 
@@ -43,12 +46,39 @@ public class LevelEditor extends BasicGameState {
 		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
 			gsm.enterState(0,new FadeOutTransition(), new FadeInTransition());
 		}
-		if (in.isKeyPressed(Input.KEY_RIGHT) && position < 45) {
-			position++;
+
+		//Garbage Code but does work
+		if (in.isKeyDown(Input.KEY_RIGHT)) {
+			if(position == 44 && scroller == 64) {
+				
+			}
+			else {
+			scroller+=8;
+				if(scroller>64) {
+					scroller=8;
+					position++;
+				}
+			}
+				
 		}
-		if (in.isKeyDown(Input.KEY_LEFT) && position > 0) {
-			position--;
+
+		if (in.isKeyDown(Input.KEY_LEFT)) {
+			//Garbage Code but does work
+			if(position == 0 && scroller ==0) {
+			}
+			
+			else {
+				scroller-=8;
+				if(scroller<0) {
+					scroller=64;
+					position--;
+				}
+			}
+				
 		}
+		
+			
+		
 		if (in.isKeyPressed(Input.KEY_S)) {
 			saveMap();
 		}
@@ -57,12 +87,13 @@ public class LevelEditor extends BasicGameState {
 		}
 		
 		if (in.isMousePressed(0)) {
-			int x = in.getAbsoluteMouseX() / tilesize + position;
+			System.out.println(scroller);
+			int x = (in.getAbsoluteMouseX() + scroller) / tilesize + position;
 			int y = in.getAbsoluteMouseY() / tilesize;
 			map.setMapTile(x, y, new AnotherTile());
 		}
 		if (in.isMousePressed(1)) {
-			int x = in.getAbsoluteMouseX() / tilesize + position;
+			int x = (in.getAbsoluteMouseX() + scroller) / tilesize + position;
 			int y = in.getAbsoluteMouseY() / tilesize;
 			map.setMapTile(x, y, new EmptyTile());
 		}
@@ -73,22 +104,38 @@ public class LevelEditor extends BasicGameState {
 		for (int i = 0; i < map.getMap().length;i++) {
 			for (int j =0; j < Setup.WIDTH/tilesize;j++) {
 				g.setColor(Color.orange);
-				g.drawRect(j*tilesize, i*tilesize, tilesize, tilesize);
+				g.drawRect(j*tilesize-scroller, i*tilesize, tilesize, tilesize);
 				g.setColor(Color.white);
 				String coords = "x: " +(j+position);
-				g.drawString(coords, j*tilesize, i*tilesize);
-		//		if (map.getMap()[i][j+position].getID()==0) {
-		//			g.drawImage(GameData.playerImage, j*tilesize+10,i*tilesize);
-	//			}
+				g.drawString(coords, j*tilesize-scroller, i*tilesize);
 				
-		//		if (map.getMap()[i][j+position].getID()==1) {
-		//			g.drawImage(GameData.enemyImage, j*tilesize, i*tilesize);
-		//			
-		//		}
+
+				if (map.getMap()[i][j+position].getID()==0) {
+					g.drawImage(GameData.playerImage, j*tilesize-scroller,i*tilesize);
+				}
+				if (map.getMap()[i][j+position].getID()==1) {
+					g.drawImage(GameData.enemyImage, j*tilesize-scroller, i*tilesize);				
+				}
+				
+				
+				if (j==Setup.WIDTH/tilesize-1) {
+					g.setColor(Color.orange);
+					g.drawRect(j*tilesize-scroller+tilesize, i*tilesize, tilesize, tilesize);
+					g.setColor(Color.white);
+					coords = "x: " +(j+position+1);
+					g.drawString(coords, j*tilesize-scroller+tilesize, i*tilesize);
+					if (map.getMap()[i][j+position+1].getID()==0) {
+						g.drawImage(GameData.playerImage, j*tilesize-scroller+tilesize,i*tilesize);
+					}
+					if (map.getMap()[i][j+position+1].getID()==1) {
+						g.drawImage(GameData.enemyImage, j*tilesize-scroller+tilesize, i*tilesize);				
+					}
+				}
+				
 			}
 		}
 	}
-	
+
 	public void saveMap() {
 		try (FileOutputStream fos = new FileOutputStream ("res/level.map");
 			     ObjectOutputStream oos = new ObjectOutputStream (fos)) {
