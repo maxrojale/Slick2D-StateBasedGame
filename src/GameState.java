@@ -29,28 +29,25 @@ public class GameState extends BasicGameState{
 	ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 	public static int counter = 0;
 	private Player player;
-	CollisionHandler collisionHandler = new CollisionHandler();
 	boolean pixelperfectcollision;
 	private Enemy enemy;
 	private Explosion explosion;
 	private Random rnd;
 	Music music;
-	//private AnimationHandler animationHandler;
 
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame gsm) throws SlickException {
-		in = gc.getInput();
-		//animationHandler = new AnimationHandler();
-		background=new Image("res/starfield2.png");
-		player = GameData.player;
 		GameData.loadGameFiles();
 		GameData.initializeGameData();
+		background=new Image("res/starfield2.png");
+		in = gc.getInput();
 		player = GameData.player;
 		bullets = GameData.bullets;
 		enemies = GameData.enemies;
 		rnd = new Random();
 		music = GameData.music;
+		
 	}
 	
 	
@@ -100,20 +97,20 @@ public class GameState extends BasicGameState{
 		}
 			
 		// Player Controls
-		if (in.isKeyDown(Input.KEY_LEFT)) {
+		if (in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_A)) {
 			player.getPlayershape().setCenterX(player.getPlayershape().getCenterX()-10);
 		}
-		if (in.isKeyDown(Input.KEY_RIGHT)) {
+		if (in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D)) {
 			player.getPlayershape().setCenterX(player.getPlayershape().getCenterX()+10);
 		}
-		if (in.isKeyDown(Input.KEY_UP)) {
+		if (in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_W)) {
 			player.getPlayershape().setCenterY(player.getPlayershape().getCenterY()-10);
 		}
-		if (in.isKeyDown(Input.KEY_DOWN)) {
+		if (in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S)) {
 			player.getPlayershape().setCenterY(player.getPlayershape().getCenterY()+10);
 		}
 	
-		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0) {
+		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0 || in.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && bulletdelay==0) {
 			player.shoot();
 			Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20);
 			bullets.add(bullet);
@@ -150,13 +147,10 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < bullets.size(); i++) {
 			for (int j=0; j < enemies.size(); j++) {
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
-					GameData.bullets = bullets;
-					GameData.enemies = enemies;
 					bullets.get(i).setDelete(true);
 					GameData.explosion.play();
 					GameData.score++;
-					GameData.scoreString = "Score: " + GameData.score;
-					explosion = new Explosion(enemies.get(j).getEnemyshape().getMinX()-16, enemies.get(j).getEnemyshape().getMinY()-16);
+					explosion = new Explosion(enemies.get(j).getEnemyshape().getMinX()-16, enemies.get(j).getEnemyshape().getMinY()-16,background_scroll_speed);
 					explosions.add(explosion);
 					enemies.remove(j);
 				}
@@ -236,13 +230,14 @@ public class GameState extends BasicGameState{
 	
 	}
 
-	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g) throws SlickException {
+
+		
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);			
-			//g.setColor(Color.magenta);
-			//g.fill(player.getPlayershape());
+			g.setColor(Color.magenta);
+			g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
 			g.setColor(Color.cyan);
 		
@@ -268,7 +263,8 @@ public class GameState extends BasicGameState{
 			}
 			g.setColor(Color.orange);
 			g.drawString("Score: " + GameData.score, 10, 10);
-		}		
+		}
+			
 	}
 		
 	

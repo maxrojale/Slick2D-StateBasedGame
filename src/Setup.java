@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Setup extends StateBasedGame {
 
 	public static final int WIDTH = 960;
-	public static final int HEIGHT = 540;
+	public static final int HEIGHT = 512;
 	public static final int FPS = 30;
 	public static final boolean FULLSCREEN = false;
 	public static final String title = "Test";
@@ -29,6 +29,7 @@ public class Setup extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new MenuState()); // ID 0
 		this.addState(new GameState()); // ID 1
+		this.addState(new LevelEditor()); // ID 7
 		this.addState(new CollisionTest()); // ID 8
 		this.addState(new GameOverState()); // ID 9
 		

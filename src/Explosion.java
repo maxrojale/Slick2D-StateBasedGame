@@ -3,13 +3,15 @@ import org.newdawn.slick.Animation;
 public class Explosion {
 
 	private float x, y;
-	int frame;
+	int frame, vector;
 	boolean animationPlayed;
 	Animation animation;
 	
-	public Explosion(float x, float y) {
+	
+	public Explosion(float x, float y, int vector) {
 		this.x = x;
 		this.y = y;
+		this.vector=vector;
 		animationPlayed = false;
 		frame=0;
 		animation = GameData.explosionAnimation;
@@ -28,6 +30,7 @@ public class Explosion {
 	}
 	
 	public void update() {
+		x-=vector;
 		if (animation.getFrame() == animation.getFrameCount()-1) {
 			animationPlayed=true;
 			animation.restart();

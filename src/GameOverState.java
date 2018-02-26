@@ -29,13 +29,12 @@ public class GameOverState extends BasicGameState {
 			GameData.initializeGameData();
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}
+
 	}
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame gsm, Graphics g)
 			throws SlickException {
-		g.setColor(Color.orange);
-		g.drawString("Final " + GameData.scoreString, Setup.WIDTH/2-150, Setup.HEIGHT/2+20);
 		g.setColor(Color.white);
 		g.drawString("Game Over.... Press ESC to Restart", Setup.WIDTH/2-150, Setup.HEIGHT/2);
 		g.setColor(Color.orange);

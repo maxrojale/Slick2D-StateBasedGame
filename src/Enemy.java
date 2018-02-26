@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -7,7 +5,6 @@ import org.newdawn.slick.geom.Shape;
 
 public class Enemy {
 	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletsize;
-	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private boolean toBeDeleted, wasHit;
 	Shape enemyshape;
 	Image enemyImage;

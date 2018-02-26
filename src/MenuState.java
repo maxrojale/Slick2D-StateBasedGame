@@ -33,9 +33,10 @@ public class MenuState extends BasicGameState {
 			menuMusic.stop();
 			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
 		}
-		//if (in.isKeyPressed(Input.KEY_ESCAPE)) {
-		//	gsm.enterState(8,new FadeOutTransition(), new FadeInTransition());
-		//}
+		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
+			menuMusic.stop();
+			gsm.enterState(7,new FadeOutTransition(), new FadeInTransition());
+		}
 	}
 	
 	@Override
