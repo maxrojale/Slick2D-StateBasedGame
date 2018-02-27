@@ -80,7 +80,6 @@ public class LevelEditor extends BasicGameState {
 		}
 		
 		if (in.isMousePressed(0)) {
-			System.out.println(scroller);
 			int x = (in.getAbsoluteMouseX() + scroller) / tilesize + position;
 			int y = in.getAbsoluteMouseY() / tilesize;
 			map.setMapTile(x, y, new AnotherTile());
