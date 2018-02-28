@@ -45,9 +45,9 @@ public class GameData {
 		explosionAnimation = new Animation(explosionSheet,60);
 		playerImage.rotate(90);
 		enemies.add(enemy1);
+		player = new Player(playerImage,100,100,1);
 
 		enemyImage.rotate(270);
-		player = new Player(playerImage,100,100);
 	}
 	
 	public static void initializeGameData() throws SlickException {
@@ -58,7 +58,7 @@ public class GameData {
 		player.setStartingPosition();
 		player.setHp(100);
 		player.setShield(100);
-		player.setCollided(false);
+		player.setDestroyed(false);
 		scoreString= "Score: " + score;
 		tilesize=64;
 

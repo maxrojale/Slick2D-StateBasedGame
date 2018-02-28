@@ -4,7 +4,7 @@ import org.newdawn.slick.geom.Shape;
 
 
 public class Enemy {
-	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, bulletsize;
+	private int posx, posy, sizex, sizey, vectorx, vectory, bulletdelay, bulletvector, ybulletsize,xbulletsize;
 	private boolean toBeDeleted, wasHit;
 	Shape enemyshape;
 	Image enemyImage;
@@ -16,7 +16,8 @@ public class Enemy {
 		this.sizey=sizey;
 		this.vectorx=vectorx;
 		this.vectory=vectory;
-		bulletsize=4;
+		xbulletsize=15;
+		ybulletsize=4;
 		bulletdelay=0;
 		bulletvector=-20;
 		toBeDeleted=false;
@@ -35,7 +36,7 @@ public class Enemy {
 
 	public void shoot() {
 		if (bulletdelay<=0) {
-			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletsize,bulletvector,0,100);
+			Bullet bullet = new Bullet(new Rectangle(enemyshape.getCenterX()-10,enemyshape.getCenterY(),xbulletsize,ybulletsize),bulletvector,0,100,25,true);
 			GameData.enemybullets.add(bullet);
 			GameData.enemy1Laser.play();
 			bulletdelay=30;

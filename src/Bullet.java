@@ -1,24 +1,27 @@
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Bullet {
 
 	private float position_x, position_y;
-	private int vector_x,vector_y,ttl;
+	private int vector_x,vector_y,ttl,damage;
 	private Shape shape;
-	boolean delete;
+	boolean delete, destroyedOnContact;
 	
 	
-	public Bullet(float position_x, float position_y, int size, int vector_x, int vector_y, int ttl) {
-		this.position_x = position_x;
-		this.position_y = position_y;
+	public Bullet(Shape shape, int vector_x, int vector_y, int ttl, int damage, boolean destroyedOnContact) {
+		this.shape = shape;
 		this.vector_x = vector_x;
 		this.vector_y = vector_y;
+		this.damage=damage;
 		this.ttl = ttl;
 		delete = false;
-		shape = new Circle(position_x,position_y,size);
+		this.destroyedOnContact = destroyedOnContact;
 	}
 	
+
+
 	public void update() {
 		shape.setCenterX(shape.getCenterX()+vector_x);
 		shape.setCenterY(shape.getCenterY()+vector_y);
@@ -70,5 +73,12 @@ public class Bullet {
 
 	public void setPosition_y(int position_y) {
 		this.position_y = position_y;
+	}
+	public int getDamage() {
+		return damage;
+	}
+
+	public boolean isDestroyedOnContact() {
+		return destroyedOnContact;
 	}
 }

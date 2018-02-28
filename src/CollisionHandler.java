@@ -10,10 +10,10 @@ public class CollisionHandler {
 		Image playerImage = player.getPlayerImage();
 		Image enemyImage = enemy.getEnemyImage();
 		
-		int xstart_player=(int)player.getPlayershape().getMinX();
-		int xend_player=(int)player.getPlayershape().getMaxX();
-		int ystart_player=(int)player.getPlayershape().getMinY();
-		int yend_player=(int)player.getPlayershape().getMaxY();
+		int xstart_player=(int)player.getShape().getMinX();
+		int xend_player=(int)player.getShape().getMaxX();
+		int ystart_player=(int)player.getShape().getMinY();
+		int yend_player=(int)player.getShape().getMaxY();
 		
 		int xstart_enemy=(int)enemy.getEnemyshape().getMinX();
 		int xend_enemy=(int)enemy.getEnemyshape().getMaxX();

@@ -98,49 +98,31 @@ public class GameState extends BasicGameState{
 		}
 			
 		// Player Controls
+		player.update();
 		if (in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_A)) {
-			player.getPlayershape().setCenterX(player.getPlayershape().getCenterX()-10);
+			player.moveleft();
 		}
 		if (in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D)) {
-			player.getPlayershape().setCenterX(player.getPlayershape().getCenterX()+10);
+			player.moveright();
 		}
 		if (in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_W)) {
-			player.getPlayershape().setCenterY(player.getPlayershape().getCenterY()-10);
+			player.moveup();
 		}
 		if (in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S)) {
-			player.getPlayershape().setCenterY(player.getPlayershape().getCenterY()+10);
+			player.movedown();
 		}
-	
+		if (in.isKeyDown(Input.KEY_1)) {
+			player.setWeapontype(0);
+		}
+		if (in.isKeyDown(Input.KEY_2)) {
+			player.setWeapontype(1);
+		}
+		if (in.isKeyDown(Input.KEY_3)) {
+			player.setWeapontype(2);
+		}
 		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0 || in.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && bulletdelay==0) {
-			switch(weapontype) {
-			case 0:
-				Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,0,100);
-				bullets.add(bullet);
-				GameData.playerLaser.play();
-				bulletdelay=5;
-				break;
-			//spray shot
-			case 1:
-				Bullet spraybullet1 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,0,25);
-				Bullet spraybullet2 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,3,25);
-				Bullet spraybullet3 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,-3,25);
-				Bullet spraybullet4 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,5,25);
-				Bullet spraybullet5 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,-5,25);
-				bullets.add(spraybullet1);
-				bullets.add(spraybullet2);
-				bullets.add(spraybullet3);
-				bullets.add(spraybullet4);
-				bullets.add(spraybullet5);
-				GameData.playerLaser.play();
-				bulletdelay=5;
-				break;
-			
-			//lasers
-			case 2:
-				break;
-			default:
-				break;
-			}
+			player.shoot();
+			bullets = GameData.bullets;
 		}
 
 		//Enemy Movement
@@ -154,8 +136,8 @@ public class GameState extends BasicGameState{
 		
 		//Collision Detection Player vs Enemies
 		for (int i=0; i < enemies.size();i++) {
-			if (enemies.get(i).getEnemyshape().intersects(player.getPlayershape())) {
-					player.setCollided(true);
+			if (enemies.get(i).getEnemyshape().intersects(player.getShape())) {
+					player.setDestroyed(true);
 				
 			}
 		}
@@ -172,7 +154,9 @@ public class GameState extends BasicGameState{
 		for (int i=0; i < bullets.size(); i++) {
 			for (int j=0; j < enemies.size(); j++) {
 				if(bullets.get(i).getShape().intersects(enemies.get(j).getEnemyshape())) {
-					bullets.get(i).setDelete(true);
+					if(bullets.get(i).isDestroyedOnContact()==true) {
+						bullets.get(i).setDelete(true);
+					}
 					GameData.explosion.play();
 					GameData.score++;
 					explosion = new Explosion(enemies.get(j).getEnemyshape().getMinX()-16, enemies.get(j).getEnemyshape().getMinY()-16,background_scroll_speed);
@@ -193,10 +177,23 @@ public class GameState extends BasicGameState{
 		//EnemyBulletsMovement & Collision vs Player
 		for (int i=0; i < ebullets.size(); i++) {
 			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
-			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {			
-				player.setHp(player.getHp()-25);
-				if (player.getHp() <= 0) {
-					player.setCollided(true);
+			if (ebullets.get(i).getShape().intersects(player.getShape())) {			
+				int damage = ebullets.get(i).getDamage();
+				int shield = player.getShield();
+				
+				if(shield - damage >= 0) {
+					shield-=damage;
+					player.setShield(shield);
+					ebullets.get(i).setDelete(true);
+				}
+				else {
+					player.setShield(0);
+					int hpdamage = damage - shield;
+					player.setHp(player.getHp()-hpdamage);
+					ebullets.get(i).setDelete(true);
+					if (player.getHp() <= 0) {
+						player.setDestroyed(true);
+					}
 				}
 			}
 		}
@@ -240,7 +237,7 @@ public class GameState extends BasicGameState{
 		GameData.enemies = enemies;
 		GameData.bullets = bullets;
 		
-		if (player.isCollided()) {
+		if (player.isDestroyed()) {
 			GameData.GameOver=true;
 			GameData.explosion.play();
 			enemies.clear();
@@ -264,9 +261,9 @@ public class GameState extends BasicGameState{
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);			
-			g.setColor(Color.magenta);
-			//g.fill(player.getPlayershape());
-			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
+			//g.setColor(Color.magenta);
+			//g.fill(player.getShape());
+			g.drawImage(player.getPlayerImage(),player.getShape().getMinX()-8,player.getShape().getMinY()-7);		
 		
 			g.setColor(Color.cyan);
 		
@@ -275,8 +272,8 @@ public class GameState extends BasicGameState{
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
-				//g.setColor(Color.orange);
-				//g.fill(ebullets.get(i).getShape());
+				g.setColor(Color.orange);
+				g.fill(ebullets.get(i).getShape());
 				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
 			}
 			
@@ -292,6 +289,15 @@ public class GameState extends BasicGameState{
 			}
 			g.setColor(Color.orange);
 			g.drawString("Score: " + GameData.score, 10, 10);
+			switch(player.getWeapontype()) {
+			case 0: g.drawString("Single Shot",240, 10);
+					break;
+			case 1: g.drawString("Spray Shot",240, 10);
+					break;
+			case 2: g.drawString("Lasers",240, 10);
+					break;
+			default:break;
+			}
 			g.setColor(Color.black);
 			g.drawRect(119,14,101,11);
 			g.drawRect(119,29,101,11);
