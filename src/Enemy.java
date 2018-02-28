@@ -35,7 +35,7 @@ public class Enemy {
 
 	public void shoot() {
 		if (bulletdelay<=0) {
-			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletsize,bulletvector);
+			Bullet bullet = new Bullet(enemyshape.getCenterX()-10,enemyshape.getCenterY(),bulletsize,bulletvector,0,100);
 			GameData.enemybullets.add(bullet);
 			GameData.enemy1Laser.play();
 			bulletdelay=30;

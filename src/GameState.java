@@ -28,6 +28,7 @@ public class GameState extends BasicGameState{
 	ArrayList<Bullet> ebullets = new ArrayList<Bullet>();
 	ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 	public static int counter = 0;
+	private int weapontype = 1;
 	private Player player;
 	boolean pixelperfectcollision;
 	private Enemy enemy;
@@ -111,11 +112,35 @@ public class GameState extends BasicGameState{
 		}
 	
 		if (in.isKeyDown(Input.KEY_SPACE) && bulletdelay==0 || in.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && bulletdelay==0) {
-			player.shoot();
-			Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20);
-			bullets.add(bullet);
-			GameData.playerLaser.play();
-			bulletdelay=5;
+			switch(weapontype) {
+			case 0:
+				Bullet bullet = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,0,100);
+				bullets.add(bullet);
+				GameData.playerLaser.play();
+				bulletdelay=5;
+				break;
+			//spray shot
+			case 1:
+				Bullet spraybullet1 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,0,25);
+				Bullet spraybullet2 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,3,25);
+				Bullet spraybullet3 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,-3,25);
+				Bullet spraybullet4 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,5,25);
+				Bullet spraybullet5 = new Bullet(player.getPlayershape().getCenterX()+10,player.getPlayershape().getCenterY(),4,20,-5,25);
+				bullets.add(spraybullet1);
+				bullets.add(spraybullet2);
+				bullets.add(spraybullet3);
+				bullets.add(spraybullet4);
+				bullets.add(spraybullet5);
+				GameData.playerLaser.play();
+				bulletdelay=5;
+				break;
+			
+			//lasers
+			case 2:
+				break;
+			default:
+				break;
+			}
 		}
 
 		//Enemy Movement
@@ -137,7 +162,7 @@ public class GameState extends BasicGameState{
 		
 		//Player Bullet Movement
 		for (int i=0; i < bullets.size(); i++) {
-			bullets.get(i).getShape().setCenterX(bullets.get(i).getShape().getCenterX()+20);		
+			bullets.get(i).update();
 		}
 		if (bulletdelay > 0) {
 			bulletdelay--;
@@ -168,8 +193,11 @@ public class GameState extends BasicGameState{
 		//EnemyBulletsMovement & Collision vs Player
 		for (int i=0; i < ebullets.size(); i++) {
 			ebullets.get(i).getShape().setCenterX(ebullets.get(i).getShape().getCenterX()+ebullets.get(i).getVector_x());
-			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {
-				player.setCollided(true);
+			if (ebullets.get(i).getShape().intersects(player.getPlayershape())) {			
+				player.setHp(player.getHp()-25);
+				if (player.getHp() <= 0) {
+					player.setCollided(true);
+				}
 			}
 		}
 		
@@ -239,6 +267,7 @@ public class GameState extends BasicGameState{
 			g.setColor(Color.magenta);
 			//g.fill(player.getPlayershape());
 			g.drawImage(player.getPlayerImage(),player.getPlayershape().getMinX()-8,player.getPlayershape().getMinY()-7);		
+		
 			g.setColor(Color.cyan);
 		
 			for (int i=0; i < bullets.size(); i++) {
@@ -263,6 +292,13 @@ public class GameState extends BasicGameState{
 			}
 			g.setColor(Color.orange);
 			g.drawString("Score: " + GameData.score, 10, 10);
+			g.setColor(Color.black);
+			g.drawRect(119,14,101,11);
+			g.drawRect(119,29,101,11);
+			g.setColor(Color.red);
+			g.fillRect(120,30,player.getHp(),10);
+			g.setColor(Color.blue);
+			g.fillRect(120,15,player.getShield(),10);
 		}
 			
 	}

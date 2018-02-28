@@ -11,25 +11,29 @@ public class Player  {
 		Shape playershape;
 		Image playerImage;
 		float[] position;
-		int hp;
+		int hp,shield;
 		
-		public Player (int posx, int posy, Image playerImage) {
+		public Player (Image playerImage, int hp, int shield) {
 			this.playerImage = playerImage;
+			this.hp = hp;
+			this.shield = shield;
 			setStartingPosition();
-			hp=100;
 		}
-		
+				
+	
+
 		public void shoot() {
 			
 		}
 		
-		public Player (Image playerImage) {
-			setStartingPosition();	
-			collided=false;
-			this.playerImage = playerImage;
+		public int getHp() {
+			return hp;
 		}
-		
-	
+
+		public void setHp(int hp) {
+			this.hp = hp;
+		}
+
 		public void init() throws SlickException {
 			playerImage = new Image("res/player.png");
 		}
@@ -52,6 +56,13 @@ public class Player  {
 		}
 		public Image getPlayerImage() {
 			return playerImage;
+		}
+		public int getShield() {
+			return shield;
+		}
+
+		public void setShield(int shield) {
+			this.shield = shield;
 		}
 
 }

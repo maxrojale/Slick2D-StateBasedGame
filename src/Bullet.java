@@ -4,17 +4,32 @@ import org.newdawn.slick.geom.Shape;
 public class Bullet {
 
 	private float position_x, position_y;
-	private int vector;
+	private int vector_x,vector_y,ttl;
 	private Shape shape;
 	boolean delete;
 	
 	
-	public Bullet(float position_x, float position_y, int size, int vector) {
+	public Bullet(float position_x, float position_y, int size, int vector_x, int vector_y, int ttl) {
 		this.position_x = position_x;
 		this.position_y = position_y;
-		this.vector = vector;
+		this.vector_x = vector_x;
+		this.vector_y = vector_y;
+		this.ttl = ttl;
 		delete = false;
 		shape = new Circle(position_x,position_y,size);
+	}
+	
+	public void update() {
+		shape.setCenterX(shape.getCenterX()+vector_x);
+		shape.setCenterY(shape.getCenterY()+vector_y);
+		ttl--;
+		if (ttl==0) {
+			delete = true;
+		}
+	}
+
+	public int getTtl() {
+		return ttl;
 	}
 
 	public boolean getDelete() {
@@ -30,11 +45,15 @@ public class Bullet {
 	}
 
 	public int getVector_x() {
-		return vector;
+		return vector_x;
+	}
+
+	public int getVector_y() {
+		return vector_y;
 	}
 
 	public void setVector_x(int vector_x) {
-		this.vector = vector_x;
+		this.vector_x = vector_x;
 	}
 
 	public float getPosition_x() {
