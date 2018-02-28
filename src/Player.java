@@ -41,18 +41,25 @@ public class Player  {
 		}
 		
 		public void moveleft() {
+			if(shape.getCenterX() - speed > 0) {
 			shape.setCenterX(shape.getCenterX()-speed);
+			}
 		}
 		
 		public void moveright() {
-			shape.setCenterX(shape.getCenterX()+speed);
+			if(shape.getCenterX() + speed < Setup.WIDTH) {
+				shape.setCenterX(shape.getCenterX()+speed);
+			}
+			
 		}
 		
 		public void moveup() {
+			if(shape.getCenterY() - speed > 0)
 			shape.setCenterY(shape.getCenterY()-speed);
 		}
 		
 		public void movedown() {
+			if(shape.getCenterY() + speed < Setup.HEIGHT)
 			shape.setCenterY(shape.getCenterY()+speed);
 		}
 

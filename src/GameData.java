@@ -42,7 +42,6 @@ public class GameData {
 		explosion = new Sound("res/explosion.wav");
 		music = new Music("res/boss.ogg");
 		explosionSheet=new SpriteSheet("res/explosion_spritesheet.png",64,64);
-		explosionAnimation = new Animation(explosionSheet,60);
 		playerImage.rotate(90);
 		enemies.add(enemy1);
 		player = new Player(playerImage,100,100,1);
