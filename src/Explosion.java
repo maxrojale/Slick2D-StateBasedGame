@@ -1,10 +1,12 @@
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.SpriteSheet;
 
 public class Explosion {
 
 	private float x, y;
 	int frame, vector;
 	boolean animationPlayed;
+	SpriteSheet spritesheet;
 	Animation animation;
 	
 	
@@ -14,7 +16,8 @@ public class Explosion {
 		this.vector=vector;
 		animationPlayed = false;
 		frame=0;
-		animation = GameData.explosionAnimation;
+		spritesheet = GameData.explosionSheet;
+		animation = new Animation(spritesheet, 60);
 	}
 	
 	public Animation getAnimation() {

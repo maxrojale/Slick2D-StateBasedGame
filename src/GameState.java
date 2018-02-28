@@ -66,7 +66,7 @@ public class GameState extends BasicGameState{
 		boolean spawnenemy=true;
 		
 		//Spawn Enemies
-		if (enemies.size() < 7) {
+		if (enemies.size() < 50) {
 			enemy = new Enemy(rnd.nextInt(600)+Setup.WIDTH,rnd.nextInt(Setup.HEIGHT),48,24,-5,0,GameData.enemyImage);
 			
 			for(int i=0; i < enemies.size();i++) {
