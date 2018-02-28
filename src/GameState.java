@@ -272,8 +272,8 @@ public class GameState extends BasicGameState{
 			}
 			
 			for (int i=0; i < ebullets.size(); i++) {
-				g.setColor(Color.orange);
-				g.fill(ebullets.get(i).getShape());
+				//g.setColor(Color.orange);
+				//g.fill(ebullets.get(i).getShape());
 				g.drawImage(GameData.enemyBullet, ebullets.get(i).getShape().getMinX()-8, ebullets.get(i).getShape().getMinY()-10);
 			}
 			
