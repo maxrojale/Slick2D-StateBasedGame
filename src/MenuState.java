@@ -32,14 +32,6 @@ public class MenuState extends BasicGameState {
 		if (!menuMusic.playing()) {
 			menuMusic.loop();
 		}
-		if (in.isKeyPressed(Input.KEY_SPACE)) {
-			menuMusic.stop();
-			gsm.enterState(1,new FadeOutTransition(), new FadeInTransition());
-		}
-		if (in.isKeyPressed(Input.KEY_ESCAPE)) {
-			menuMusic.stop();
-			gsm.enterState(7,new FadeOutTransition(), new FadeInTransition());
-		}
 		if (in.isKeyPressed(Input.KEY_UP)) {
 			highlightedMenuItem--;
 			if(highlightedMenuItem==0) {
@@ -62,6 +54,9 @@ public class MenuState extends BasicGameState {
 					menuMusic.stop();
 					gsm.enterState(7,new FadeOutTransition(), new FadeInTransition());
 					break;
+				case 3:
+					menuMusic.stop();
+					System.exit(0);
 				
 				default:
 					break;
