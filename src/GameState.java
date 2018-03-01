@@ -261,8 +261,8 @@ public class GameState extends BasicGameState{
 		if (!GameData.GameOver) {
 			g.drawImage(background, background_pos, 0);
 			g.drawImage(background, background2_pos, 0);			
-			//g.setColor(Color.magenta);
-			//g.fill(player.getShape());
+			g.setColor(Color.magenta);
+			g.fill(player.getShape());
 			g.drawImage(player.getPlayerImage(),player.getShape().getMinX()-8,player.getShape().getMinY()-7);		
 		
 			g.setColor(Color.cyan);
@@ -279,8 +279,8 @@ public class GameState extends BasicGameState{
 			
 			for (int i=0; i < enemies.size(); i++) {
 				if (!enemies.get(i).isToBeDeleted() && !enemies.get(i).WasHit()) {
-					//g.setColor(Color.green);
-					//g.fill(enemies.get(i).getEnemyshape());
+					g.setColor(Color.green);
+					g.fill(enemies.get(i).getEnemyshape());
 					g.drawImage(enemies.get(i).getEnemyImage(),enemies.get(i).getEnemyshape().getMinX()-5,enemies.get(i).getEnemyshape().getMinY()-20);
 				}
 			}

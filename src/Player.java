@@ -9,12 +9,11 @@ import org.newdawn.slick.geom.Shape;
 
 public class Player  {
 	
-
 		boolean destroyed;
 		Shape shape;
 		Image playerImage;
 		float[] position;
-		int hp,shield, shieldregen, shieldregendelay, speed, maxshield, maxhp, weapontype, bulletdelay;
+		int hp, shield, shieldregen, shieldregendelay, speed, maxshield, maxhp, weapontype, bulletdelay;
 		Bullet bullet;
 		
 		public Player (Image playerImage, int hp, int shield, int shieldregen) {
@@ -74,16 +73,24 @@ public class Player  {
 					break;
 				//spray shot
 				case 1:
-					Bullet spraybullet1 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,0,25,100,true);
+					Bullet spraybullet1 = new Bullet(new Rectangle(shape.getCenterX()+10,shape.getCenterY()+3,50,2),20,0,50,100,false);;
 					Bullet spraybullet2 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,3,25,100,true);
 					Bullet spraybullet3 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,-3,25,100,true);
 					Bullet spraybullet4 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,5,25,100,true);
 					Bullet spraybullet5 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,-5,25,100,true);
+					Bullet spraybullet6 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,7,25,100,true);
+					Bullet spraybullet7 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),20,-7,25,100,true);
+					Bullet sideshot1 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),0,-20,50,100,true);
+					Bullet sideshot2 = new Bullet(new Circle(shape.getCenterX()+10,shape.getCenterY(),4),0,20,50,100,true);
 					GameData.bullets.add(spraybullet1);
 					GameData.bullets.add(spraybullet2);
 					GameData.bullets.add(spraybullet3);
 					GameData.bullets.add(spraybullet4);
 					GameData.bullets.add(spraybullet5);
+					GameData.bullets.add(spraybullet6);
+					GameData.bullets.add(spraybullet7);
+					GameData.bullets.add(sideshot1);
+					GameData.bullets.add(sideshot2);
 					GameData.playerLaser.play();
 					bulletdelay=5;
 					break;
