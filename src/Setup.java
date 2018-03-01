@@ -10,7 +10,7 @@ public class Setup extends StateBasedGame {
 	public static final int HEIGHT = 512;
 	public static final int FPS = 30;
 	public static final boolean FULLSCREEN = false;
-	public static final String title = "Test";
+	public static final String title = "Space Shooter";
 	
 	public Setup(String name) {
 		super(name);
